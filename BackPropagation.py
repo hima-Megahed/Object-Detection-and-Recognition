@@ -1,7 +1,6 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-import NNTask3.plotIris as p
 
 class BackPropagation:
 
