@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 from BackPropagation import BackPropagation
+from DataManipulation import TrainingData
 import numpy as np
 
 
@@ -30,6 +31,10 @@ class GUI:
         self.stoppingCriteria.set(1)
         self.NumberOfNeuronsRBF = tk.IntVar()
         self.NumberOfNeuronsRBF.set(4)
+
+        training_tmp = TrainingData()
+        self.TrainingData = TrainingData.read(training_tmp)
+        self.PCA_TFeatures = TrainingData.apply_pca(training_tmp)
         self.initialize_components()
         self.root.mainloop()
 
@@ -118,3 +123,4 @@ class GUI:
         tk.Button(self.root, text="Testing", width=10, fg="Black",
                   bg="light Gray", command=lambda: self.testing())\
             .place(relx=0.67, rely=0.80)
+

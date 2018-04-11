@@ -1,17 +1,18 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+from DataManipulation import TrainingData
+
 
 class BackPropagation:
 
     def __init__(self):
         self.weights = {}
         self.weights_inputs = {}
-        pass
 
-    def MainAlgorithm(self, features, eta, epochs, bias, threshold,
-                      stopping_criteria, activation_function,
-                      num_hidden_layer, num_neurons_layer):
+    def main_algorithm(self, features, eta, epochs, bias, threshold,
+                       stopping_criteria, activation_function,
+                       num_hidden_layer, num_neurons_layer):
         """This function will run the back propagation algorithm"""
 
         # Initializing weight vector with random values
@@ -72,8 +73,8 @@ class BackPropagation:
             # p.PlotIris()
             # plt.show()
 
-    def NetInput(self, X, weight, weights_inputs, bias, num_hidden_layer,
-                 num_neurons_layer, activation_function):
+    def net_input(self, X, weight, weights_inputs, bias, num_hidden_layer,
+                  num_neurons_layer, activation_function):
         """This function will get the Net of each neuron """
         ind = 1
         ind_WInput = 0
@@ -109,17 +110,20 @@ class BackPropagation:
                     ind += 1
                 ind_WInput += num_neurons_layer
         return weights_inputs
-    def ComputeMeanSquareError(self,error):
+
+    @staticmethod
+    def compute_mean_square_error(error):
         sum = 0.0
         for i in range(len(error)):
             sum += error[i]**2
         return sum/len(error)
+
     @staticmethod
     def sigmoid(x):
         return 1 / (1 + math.exp(-x))
 
     @staticmethod
-    def Hyperbolic_tangent(x):
+    def hyperbolic_tangent(x):
         return np.tanh(x)
 
     def activate(self,activation_function, x):
@@ -162,7 +166,7 @@ class BackPropagation:
     # TODO: Implement backward error propagation
         return weights, weights_inputs
 
-    def drivative_transfer(self, activation_function, x):
+    def derivative_transfer(self, activation_function, x):
         if activation_function == 1:
             return self.sigmoid_derivative(x)
         else:
@@ -173,7 +177,7 @@ class BackPropagation:
         return x * (1-x)
 
     @staticmethod
-    def Hyperbolic_tangent_derivative(x):
+    def hyperbolic_tangent_derivative(x):
         return 1- np.power(np.tanh(x),2)
 
     def propagate_error(self, weights_inputs, weight, num_hidden_layer,
@@ -191,19 +195,20 @@ class BackPropagation:
                         for k in range(num_neurons_layer):
                             sum += weights_inputs[(i + 1) * num_neurons_layer + k]*error[(i+1)*num_neurons_layer+k]
 
-                    error[ind] = sum * self.drivative_transfer(activation_function,weights_inputs[ind])
+                    error[ind] = sum * self.derivative_transfer(activation_function, weights_inputs[ind])
                     ind -= 1
 
             else:
                 for j in range(3):
                     y = YOut - weights_inputs[ind]
-                    error[ind]=y* self.drivative_transfer(activation_function,weights_inputs[ind])
+                    error[ind]=y* self.derivative_transfer(activation_function, weights_inputs[ind])
                     ind -= 1
 
         return error
 
-    def update_weights(self, weights_inputs, weight, num_hidden_layer
-                       ,num_neurons_layer, eta, error, bias, X):
+    @staticmethod
+    def update_weights(weights_inputs, weight, num_hidden_layer
+                       , num_neurons_layer, eta, error, bias, X):
         ind = len(weight)
         ind_WInput = len(weights_inputs) - 4
         ind_E = len(error) - 1
@@ -252,8 +257,8 @@ class BackPropagation:
                     ind_E -= 1
         return weight
 
-
-    def MainAlgorithmTesting(self,features,bias,activation_function,num_hidden_layer,num_neurons_layer):
+    def main_algorithm_testing(self, features, bias, activation_function,
+                               num_hidden_layer,num_neurons_layer):
         Output = []
         for j in range(len(features["X1"])):
                     # getting input vector
