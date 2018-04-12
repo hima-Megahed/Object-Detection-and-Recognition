@@ -9,118 +9,170 @@ class BackPropagation:
     def __init__(self):
         self.weights = {}
         self.weights_inputs = {}
+        self.errors = []
 
     def main_algorithm(self, features, eta, epochs, bias, threshold,
                        stopping_criteria, activation_function,
-                       num_hidden_layer, num_neurons_layer):
+                       num_hidden_layer, num_neurons_layer, n_samples):
         """This function will run the back propagation algorithm"""
 
         # Initializing weight vector with random values
-        weights, weights_inputs = self.initialize(num_hidden_layer, num_neurons_layer)
+        weights, weights_inputs = self.initialize(num_hidden_layer,
+                                                  num_neurons_layer)
 
         if stopping_criteria == 1:  # Number of epochs
             # loop through number of epochs
             for i in range(epochs):
+                sample_ind = 1
                 # loop through number of samples
-                for j in range(len(features["X1"])):
+                for sample in features:
                     # getting input vector
-                    X = [features["X1"][j], features["X2"][j],
-                         features["X3"][j], features["X4"][j]]
-                    YOut = features["Y"][j]
-                    weights_inputs = self.NetInput(X, weights, weights_inputs,
-                                                   bias, num_hidden_layer,
-                                                   num_neurons_layer,
-                                                   activation_function)
+                    input_vector = sample
+                    desired_output = self.__get_sample_class(sample_ind)
+                    weights_inputs = self.net_input(input_vector,
+                                                    weights, weights_inputs,
+                                                    bias, num_hidden_layer,
+                                                    num_neurons_layer,
+                                                    activation_function)
                     error = self.propagate_error(weights_inputs, weights,
                                                  num_hidden_layer,
                                                  num_neurons_layer,
-                                                 YOut, activation_function)
+                                                 desired_output,
+                                                 activation_function)
 
-                    weights = self.update_weights(weights_inputs, weights, num_hidden_layer
-                       ,num_neurons_layer, eta, error, bias, X)
+                    weights = self.update_weights(weights_inputs, weights,
+                                                  num_hidden_layer,
+                                                  num_neurons_layer, eta,
+                                                  error, bias, input_vector)
+
                     self.weights = weights
+                    self.errors = error
                     self.weights_inputs = weights_inputs
+                    sample_ind += 1
 
         else:  # Threshold MSE
-            MSE_arr = []
-            epochs_arr = []
-            Epoch_Ind = 1
-            MSE = 10000000.0
-            while MSE > threshold and Epoch_Ind < 1000:
-               for j in range(len(features["X1"])):
+            epoch_ind = 1
+            mse = 10000000.0
+            mse_errors = [0] * 5
+
+            while epoch_ind < 1000:
+                sample_ind = 1
+                # loop through number of samples
+                for sample in features:
                     # getting input vector
-                    X = [features["X1"][j], features["X2"][j],
-                         features["X3"][j], features["X4"][j]]
-                    YOut = features["Y"][j]
-                    weights_inputs = self.NetInput(X, weights, weights_inputs,
-                                                   bias, num_hidden_layer,
-                                                   num_neurons_layer,
-                                                   activation_function)
+                    input_vector = sample
+                    desired_output = self.__get_sample_class(sample_ind)
+                    weights_inputs = self.net_input(input_vector,
+                                                    weights, weights_inputs,
+                                                    bias, num_hidden_layer,
+                                                    num_neurons_layer,
+                                                    activation_function)
                     error = self.propagate_error(weights_inputs, weights,
                                                  num_hidden_layer,
                                                  num_neurons_layer,
-                                                 YOut, activation_function)
+                                                 desired_output,
+                                                 activation_function)
 
-                    weights = self.update_weights(weights_inputs, weights, num_hidden_layer
-                       ,num_neurons_layer, eta, error, bias, X)
+                    weights = self.update_weights(weights_inputs, weights,
+                                                  num_hidden_layer,
+                                                  num_neurons_layer, eta,
+                                                  error, bias, input_vector)
 
-                    MSE = self.ComputeMeanSquareError(error)
-                    MSE_arr.append(MSE)
-                    epochs_arr.append(Epoch_Ind)
-                    Epoch_Ind += 1
-                    print(MSE)
-            return MSE_arr, epochs_arr
-            # p.PlotIris()
-            # plt.show()
+                    self.weights = weights
+                    self.errors = error
+                    self.weights_inputs = weights_inputs
+                    sample_ind += 1
 
-    def net_input(self, X, weight, weights_inputs, bias, num_hidden_layer,
-                  num_neurons_layer, activation_function):
+                mse, mse_errors = self.compute_mean_square_error(
+                    self.errors[-5:], mse_errors, n_samples)
+                epoch_ind += 1
+                if mse <= threshold:
+                    po = 0
+                    break
+            pi = 4
+
+            #return MSE_arr, epochs_arr
+
+    def net_input(self, input_vector, weight, weights_inputs, bias,
+                  num_hidden_layer, num_neurons_layer, activation_function):
         """This function will get the Net of each neuron """
+
         ind = 1
-        ind_WInput = 0
+        ind_w_input = 0
+        # num of hidden layers and output layer
         for i in range(num_hidden_layer + 1):
+            # First Layer of the hidden layers
             if i == 0:
+                # Number of neurons in first layer of hidden layers
                 for j in range(num_neurons_layer):
-                    V = bias * weight["w"+str(ind)][0] \
-                        + X[0] * weight["w"+str(ind)][1] \
-                        + X[1] * weight["w"+str(ind)][2] \
-                        + X[2] * weight["w"+str(ind)][3] \
-                        + X[3] * weight["w"+str(ind)][4]
+                    vsum = 0.0  # sum of weights in single node
+                    # Number of weights 25 in the node in first layer of
+                    # hidden layers 24 + 1 bias
+                    for a in range(0, 25):
+                        # bias
+                        if a == 0:
+                            vsum += bias * weight["w"+str(ind)][a]
+                        # Rest of weights in single node
+                        else:
+                            vsum += input_vector[a-1] * weight["w"+str(ind)][a]
 
-                    Y = self.activate(activation_function, V)
-                    weights_inputs[ind-1] = Y
+                    y = self.activate(activation_function, vsum)
+                    weights_inputs[ind-1] = y
                     ind += 1
+            # Output Layer
             elif i == num_hidden_layer:
-                for j in range(3):
-                    V = bias * weight["w"+str(ind)][0]
-                    for k in range(1, num_neurons_layer + 1):
-                        V += weights_inputs[ind_WInput + k - 1] * weight["w"+str(ind)][k]
+                # Number of Nodes in output layer
+                for j in range(5):
+                    vsum = 0.0  # sum of weights in single node
+                    # Number of weights in single node
+                    for a in range(0, num_neurons_layer + 1):
+                        # bias
+                        if a == 0:
+                            vsum += bias * weight["w" + str(ind)][a]
+                        # Rest of weights in single node
+                        else:
+                            vsum += weights_inputs[ind_w_input + a - 1] * \
+                                    weight["w" + str(ind)][a]
 
-                    Y = self.activate(activation_function, V)
-                    weights_inputs[ind-1] = Y
+                    y = self.activate(activation_function, vsum)
+                    weights_inputs[ind-1] = y
                     ind += 1
+            # Regular Layer in th hidden layer
             else:
+                # Number of neurons in regular layer in hidden layers
                 for j in range(num_neurons_layer):
-                    V = bias * weight["w" + str(ind)][0]
-                    for k in range(1, num_neurons_layer + 1):
-                        V += weights_inputs[ind_WInput + k - 1] * \
-                             weight["w" + str(ind)][k]
-                    Y = self.activate(activation_function, V)
-                    weights_inputs[ind-1] = Y
+                    vsum = 0.0  # sum of weights in single node
+                    # Number of weights in single node
+                    for a in range(0, num_neurons_layer + 1):
+                        # bias
+                        if a == 0:
+                            vsum += bias * weight["w" + str(ind)][a]
+                        # Rest of weights in single node
+                        else:
+                            vsum += weights_inputs[ind_w_input + a - 1] * \
+                                    weight["w" + str(ind)][a]
+
+                    y = self.activate(activation_function, vsum)
+                    weights_inputs[ind-1] = y
                     ind += 1
-                ind_WInput += num_neurons_layer
+                ind_w_input += num_neurons_layer
         return weights_inputs
 
     @staticmethod
-    def compute_mean_square_error(error):
-        sum = 0.0
+    def compute_mean_square_error(error, mse_errors, n_samples):
+        err_sum = 0.0
+        tmp = []
         for i in range(len(error)):
-            sum += error[i]**2
-        return sum/len(error)
+            mse_errors[i] += error[i]**2
+
+        for i in range(len(mse_errors)):
+            tmp.append(mse_errors[i] / (2 * n_samples))
+        err_sum = np.sum(tmp) / 5
+        return err_sum, mse_errors
 
     @staticmethod
     def sigmoid(x):
-        return 1 / (1 + math.exp(-x))
+        return 1 / (1 + np.exp(-x))
 
     @staticmethod
     def hyperbolic_tangent(x):
@@ -130,32 +182,39 @@ class BackPropagation:
         if activation_function == 1:
             return self.sigmoid(x)
         else:
-            return self.Hyperbolic_tangent(x)
+            return self.hyperbolic_tangent(x)
 
     @staticmethod
     def initialize(num_hidden_layer, num_neurons_layer):
         weights = {}
         weights_inputs = []
         ind = 1
-        for i in range(num_hidden_layer + 1):  # num of hidden layers and output layer
+
+        # num of hidden layers and output layer
+        for i in range(num_hidden_layer + 1):
+            # First Layer have 24 weights to every node in the first layer
+            # of the hidden layer + 1 bias
             if i == 0:
                 for j in range(num_neurons_layer):
                     weights["w" + str(ind)] = [np.random.rand(1)[0]
                                                for k
                                                in range
-                                               (5)]
+                                               (25)]
                     weights_inputs.append(0)
                     ind += 1
+            # Output Layer 5 nodes ONLY
             elif i == num_hidden_layer:
-                for j in range(int(3)):
+                for j in range(int(5)):
+                    # inputs to neuron is number of neurons per layer + bias
                     weights["w" + str(ind)] = [np.random.rand(1)[0]
                                                for k
                                                in range
-                                               (
-                                                   num_neurons_layer + 1)]  # inputs to neuron number of last neurons + bias
+                                               (num_neurons_layer + 1)]
                     weights_inputs.append(0)
                     ind += 1
+            # Hidden Layers in the middle Not First neither output
             else:
+                # inputs to neuron is number of neurons per layer + bias
                 for j in range(int(num_neurons_layer)):
                     weights["w" + str(ind)] = [np.random.rand(1)[0]
                                                for k
@@ -181,80 +240,113 @@ class BackPropagation:
         return 1- np.power(np.tanh(x),2)
 
     def propagate_error(self, weights_inputs, weight, num_hidden_layer,
-                        num_neurons_layer, YOut, activation_function):
+                        num_neurons_layer, desired_output,
+                        activation_function):
+
         error = [0] * len(weights_inputs)
         ind = len(weights_inputs) - 1
-        for i in reversed(range(num_hidden_layer+1)):
+        # Number of Hidden layers + Output layer,
+        #  starting from output layer
+        for i in reversed(range(num_hidden_layer + 1)):
+            # Regular Layer in the hidden layers
             if i != num_hidden_layer:
                 for j in range(num_neurons_layer):
-                    sum = 0.0
-                    if i+1 == num_hidden_layer:
-                        for k in range(3):
-                            sum += weights_inputs[(i+1)*num_neurons_layer+k]*error[(i+1)*num_neurons_layer+k]
+                    vsum = 0.0  # sum of weights in single node
+                    # The Layer that directly precede output layer
+                    if i + 1 == num_hidden_layer:
+                        # Number of Neurons in output layer
+                        for k in range(5):
+                            vsum += weights_inputs[
+                                        (i + 1) * num_neurons_layer + k] \
+                                    * error[(i + 1) * num_neurons_layer + k]
+                    # Rest Of Layers
                     else:
+                        # Number of neurons in each layer in Hidden layers
                         for k in range(num_neurons_layer):
-                            sum += weights_inputs[(i + 1) * num_neurons_layer + k]*error[(i+1)*num_neurons_layer+k]
+                            vsum += weights_inputs[
+                                        (i + 1) * num_neurons_layer + k] \
+                                    * error[(i + 1) * num_neurons_layer + k]
 
-                    error[ind] = sum * self.derivative_transfer(activation_function, weights_inputs[ind])
+                    error[ind] = vsum * self.derivative_transfer(
+                        activation_function, weights_inputs[ind])
                     ind -= 1
-
+            # Output Layer
             else:
-                for j in range(3):
-                    y = YOut - weights_inputs[ind]
-                    error[ind]=y* self.derivative_transfer(activation_function, weights_inputs[ind])
+                # Number of neurons in the Output Layer
+                for j in range(5):
+                    y = desired_output - weights_inputs[ind]
+                    error[ind] = y * self.derivative_transfer(
+                        activation_function, weights_inputs[ind])
                     ind -= 1
 
         return error
 
     @staticmethod
     def update_weights(weights_inputs, weight, num_hidden_layer
-                       , num_neurons_layer, eta, error, bias, X):
+                       , num_neurons_layer, eta, error, bias, input_vector):
         ind = len(weight)
-        ind_WInput = len(weights_inputs) - 4
-        ind_E = len(error) - 1
+        # Number of neurons in output layer + 1 because array is 0 based
+        ind_w_input = len(weights_inputs) - 6
+        ind_e = len(error) - 1
+        # Number of Hidden Layers + Output Layer
         for i in reversed(range(num_hidden_layer + 1)):
-            # output layer weights
+            # Output layer
             if i == num_hidden_layer:
-                for j in reversed(range(3)):
+                # Number of Neurons in Output layer
+                for j in reversed(range(5)):
+                    # Number of weights from neurons in each layer + bias
                     for k in reversed(range(num_neurons_layer + 1)):
+                        # weight from Bias
                         if k == 0:
                             weight["w" + str(ind)][k] = eta * bias\
-                                                     * error[ind_E]
+                                                     * error[ind_e]
+                        # weight from Regular neuron
                         else:
-                            weight["w" + str(ind)][k] = eta * weights_inputs[ind_WInput] \
-                                                     * error[ind_E]
-                            ind_WInput -= 1
+                            weight["w" + str(ind)][k] = eta * \
+                                                        weights_inputs[
+                                                            ind_w_input]\
+                                                        * error[ind_e]
+                            ind_w_input -= 1
                     ind -= 1
-                    ind_WInput += num_neurons_layer
-                    ind_E -= 1
+                    ind_w_input += num_neurons_layer
+                    ind_e -= 1
+            # First Layer
             elif i == 0:
+                # Number of neurons in first layer of the Hidden layers
                 for j in reversed(range(num_neurons_layer)):
-                    for k in reversed(range(5)):
+                    # Number of weights from Input layer 24 + bias for
+                    # each neuron
+                    for k in reversed(range(25)):
                         if k == 0:
                             weight["w" + str(ind)][k] = eta * bias\
-                                                     * error[ind_E]
+                                                     * error[ind_e]
                         else:
-                            weight["w" + str(ind)][k] = eta * X[k-1] \
-                                                     * error[ind_E]
+                            weight["w" + str(ind)][k] = eta * \
+                                                        input_vector[k - 1] \
+                                                        * error[ind_e]
                     ind -= 1
-                    ind_E -= 1
+                    ind_e -= 1
+            # Regular Layers in Hidden layers
             else:
-                ind_WInput -= num_neurons_layer
-
+                ind_w_input -= num_neurons_layer
+                # Number of neurons in Regular layer in the Hidden layers
                 for j in range(num_neurons_layer):
+                    # Number of weights from neurons in the layer + Bias
                     for k in reversed(range(num_neurons_layer + 1)):
+                        # Bias
                         if k == 0:
                             weight["w" + str(ind)][k] = eta * bias\
-                                                     * error[ind_E]
+                                                     * error[ind_e]
+                        # Weights from rest of neurons
                         else:
-                            if ind_E < 0:
-                                print("err ", ind_E)
-                            weight["w" + str(ind)][k] = eta * weights_inputs[ind_WInput]\
-                                                        * error[ind_E]
-                            ind_WInput -= 1
+                            weight["w" + str(ind)][k] = eta * \
+                                                        weights_inputs[
+                                                            ind_w_input]\
+                                                        * error[ind_e]
+                            ind_w_input -= 1
                     ind -= 1
-                    ind_WInput += num_neurons_layer
-                    ind_E -= 1
+                    ind_w_input += num_neurons_layer
+                    ind_e -= 1
         return weight
 
     def main_algorithm_testing(self, features, bias, activation_function,
@@ -279,3 +371,16 @@ class BackPropagation:
                     else:
                         Output.append(3)
         return Output
+
+    @staticmethod
+    def __get_sample_class(num):
+        if 1 <= num <= 5:
+            return 1
+        elif 6 <= num <= 10:
+            return 2
+        elif 11 <= num <= 15:
+            return 3
+        elif 16 <= num <= 20:
+            return 4
+        else:
+            return 5
