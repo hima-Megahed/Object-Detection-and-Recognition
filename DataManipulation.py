@@ -15,12 +15,8 @@ from PIL import Image
 
 class TrainingData:
     def __init__(self):
-        self.__TRAINING_PATH = "F:\GitHub - Projects" \
-                               "\Object-Detection-and-Recognition" \
-                               "\Data set\Training"
-        self.__TESTING_PATH = "F:\GitHub - Projects" \
-                              "\Object-Detection-and-Recognition" \
-                              "\Data set\Testing"
+        self.__TRAINING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition-master/Data set/Training"
+        self.__TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition-master/Data set/Testing"
         # changing directory
         os.chdir(self.__TRAINING_PATH)
         self.__Training_Pics = [
