@@ -4,6 +4,7 @@ from tkinter import ttk
 from BackPropagation import BackPropagation
 from DataManipulation import TrainingData
 import numpy as np
+from RBF import RadialBasisFunction
 
 
 class GUI:
@@ -151,5 +152,10 @@ class GUI:
         # Radial Basis Function
         else:
             # TODO: Implement RBF
-            pass
+            RBF = RadialBasisFunction(self.PCA_TFeatures,self.learn_rate,
+                                      self.epochsNo,self.errorThreshold,
+                                      self.NumberOfNeuronsRBF)
+            weights = RBF.mseTrain() #weights[ [numHiddenNeurons] ] -> outter list size equals number of output neurons, inner  equals num HiddenNeurons
+
+            # RBF.mseTest(features,weights)      this calling for testing
         return 0
