@@ -229,7 +229,7 @@ class BackPropagation:
         if activation_function == 1:
             return self.sigmoid_derivative(x)
         else:
-            return self.Hyperbolic_tangent_derivative(x)
+            return self.hyperbolic_tangent_derivative(x)
 
     @staticmethod
     def sigmoid_derivative(x):
@@ -351,26 +351,19 @@ class BackPropagation:
 
     def main_algorithm_testing(self, features, bias, activation_function,
                                num_hidden_layer,num_neurons_layer):
-        Output = []
-        for j in range(len(features["X1"])):
-                    # getting input vector
-                    X = [features["X1"][j], features["X2"][j],
-                         features["X3"][j], features["X4"][j]]
-                    YOut = features["Y"][j]
-                    weights_inputs = self.NetInput(X, self.weights, self.weights_inputs,
-                                                   bias, num_hidden_layer,
-                                                   num_neurons_layer,
-                                                   activation_function)
-                    Length = len(weights_inputs)
-                    if weights_inputs[Length - 1] > weights_inputs[Length - 2] and \
-                        weights_inputs[Length - 1] > weights_inputs[Length -3]:
-                        Output.append(1)
-                    elif weights_inputs[Length - 2] > weights_inputs[Length - 1] and \
-                        weights_inputs[Length - 2] > weights_inputs[Length -3]:
-                        Output.append(2)
-                    else:
-                        Output.append(3)
-        return Output
+        output = []
+        sample_ind = 1
+        for sample in features:
+            # getting input vector
+            input_vector = sample
+            desired_output = self.__get_sample_class(sample_ind)
+            weights_inputs = self.net_input(input_vector,
+                                            self.weights, self.weights_inputs,
+                                            bias, num_hidden_layer,
+                                            num_neurons_layer,
+                                            activation_function)
+
+        return output
 
     @staticmethod
     def __get_sample_class(num):

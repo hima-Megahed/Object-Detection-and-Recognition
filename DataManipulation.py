@@ -7,6 +7,10 @@ import plotly
 from plotly.graph_objs import *
 from scipy.linalg import eigh
 import numpy as np
+import scipy
+from scipy import ndimage
+import matplotlib.pyplot as plt
+from PIL import Image
 
 
 class TrainingData:
@@ -53,7 +57,8 @@ class TrainingData:
         img_data = []
         # Reading Data From Training File
         for i in range(25):
-            img = imread(self.__Training_Pics[i], as_grey=True)
+            # img = imread(self.__Training_Pics[i], as_grey=True)
+            img = scipy.misc.imread(self.__Training_Pics[i], mode='L')
             # Resizing Image to 50x50
             img = resize(img, (50, 50))
             # Converting Image from 2D to 1D
@@ -72,7 +77,17 @@ class TrainingData:
 
         # Scaling Data To Enhance Accuracy
         self.__TrainingData = StandardScaler().fit_transform(img_data)
-
+        """
+        img = imread(self.__TESTING_PATH + "\T1 - Cat Laptop .png", as_grey=True)
+        plt.imshow(img)
+        plt.show()
+        # Resizing Image to 50x50
+        img = resize(img, (50, 50))
+        #imgf = ndimage.gaussian_filter(img, 0.01)
+        labeled, nr_objects = ndimage.label(img > 1)
+        plt.imshow(labeled)
+        plt.show()
+"""
         return self.__TrainingData
 
     def graph_pcs(self):
