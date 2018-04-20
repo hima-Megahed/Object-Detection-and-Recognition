@@ -1,22 +1,28 @@
 import os
-from skimage.io import imread
+from skimage import io, morphology, measure
 from skimage.transform import resize
+from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA as sklearnPCA
 from sklearn.preprocessing import StandardScaler
 import plotly
 from plotly.graph_objs import *
 from scipy.linalg import eigh
 import numpy as np
-import scipy
+from scipy import misc
 from scipy import ndimage
 import matplotlib.pyplot as plt
 from PIL import Image
+from operator import itemgetter
 
 
 class TrainingData:
     def __init__(self):
-        self.__TRAINING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition-master/Data set/Training"
-        self.__TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition-master/Data set/Testing"
+        self.__TRAINING_PATH = "F:\GitHub - Projects" \
+                               "\Object-Detection-and-Recognition\Data set" \
+                               "\Training"
+        self.__TESTING_PATH = "F:\GitHub - Projects" \
+                              "\Object-Detection-and-Recognition\Data set" \
+                              "\Testing"
         # changing directory
         os.chdir(self.__TRAINING_PATH)
         self.__Training_Pics = [
@@ -50,11 +56,13 @@ class TrainingData:
         self.__PCA_TFeatures = np.ndarray(shape=(25, 2500), dtype=float)
 
     def read(self):
+        img = misc.imread(self.__TESTING_PATH + "\T1 - Cat Laptop .png")
+
         img_data = []
         # Reading Data From Training File
         for i in range(25):
             # img = imread(self.__Training_Pics[i], as_grey=True)
-            img = scipy.misc.imread(self.__Training_Pics[i], mode='L')
+            img = misc.imread(self.__Training_Pics[i], mode='L')
             # Resizing Image to 50x50
             img = resize(img, (50, 50))
             # Converting Image from 2D to 1D
@@ -73,17 +81,7 @@ class TrainingData:
 
         # Scaling Data To Enhance Accuracy
         self.__TrainingData = StandardScaler().fit_transform(img_data)
-        """
-        img = imread(self.__TESTING_PATH + "\T1 - Cat Laptop .png", as_grey=True)
-        plt.imshow(img)
-        plt.show()
-        # Resizing Image to 50x50
-        img = resize(img, (50, 50))
-        #imgf = ndimage.gaussian_filter(img, 0.01)
-        labeled, nr_objects = ndimage.label(img > 1)
-        plt.imshow(labeled)
-        plt.show()
-"""
+
         return self.__TrainingData
 
     def graph_pcs(self):
@@ -125,3 +123,19 @@ class TrainingData:
         sklearn_pca = sklearnPCA(n_components=24)
         self.__PCA_TFeatures = sklearn_pca.fit_transform(self.__TrainingData)
         return self.__PCA_TFeatures
+
+    def get_distinct_colors(self, img):
+        arr = []
+        for i in range(img.shape[0]):
+            for j in range(img.shape[1]):
+                if len(arr) is 0 or self.new_color(arr, img[i][j]):
+                    arr.append(img[i][j])
+
+        return arr
+
+    @staticmethod
+    def new_color(arr, pixel):
+        for c in arr:
+            if c[0] == pixel[0] and c[1] == pixel[1] and c[2] == pixel[2]:
+                return False
+        return True

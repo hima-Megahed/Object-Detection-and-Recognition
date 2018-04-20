@@ -12,9 +12,9 @@ class GUI:
         """ Initializing main components and properties"""
         self.root = tk.Tk()
         self.learnRate = tk.DoubleVar(self.root)
-        self.learnRate.set(0.01)
+        self.learnRate.set(0.3)
         self.epochsNo = tk.IntVar(self.root)
-        self.epochsNo.set(4)
+        self.epochsNo.set(2000)
         self.bias = tk.IntVar(self.root)
         self.bias.set(1)
         self.root.resizable(height=False, width=False)
@@ -25,7 +25,7 @@ class GUI:
         self.NumberOfHiddenLayers = tk.IntVar(self.root)
         self.NumberOfHiddenLayers.set(2)
         self.NumberOfNeuronsInEachLayer = tk.IntVar(self.root)
-        self.NumberOfNeuronsInEachLayer.set(3)
+        self.NumberOfNeuronsInEachLayer.set(6)
         self.activationFunction = tk.IntVar()
         self.activationFunction.set(1)
         self.stoppingCriteria = tk.IntVar()
@@ -37,6 +37,7 @@ class GUI:
         training_tmp = TrainingData()
         self.TrainingData = TrainingData.read(training_tmp)
         self.PCA_TFeatures = TrainingData.apply_pca(training_tmp)
+        self.back_propagation = None
 
         self.initialize_components()
         self.root.mainloop()
@@ -94,6 +95,10 @@ class GUI:
                        text="MSE Threshold",
                        variable=self.stoppingCriteria,
                        value=2).place(relx=0.03, rely=0.67)
+        tk.Radiobutton(page1,
+                       text="Cross Validation",
+                       variable=self.stoppingCriteria,
+                       value=3).place(relx=0.03, rely=0.72)
 
         tk.Entry(page1, width=17, textvariable=self.errorThreshold)\
             .place(relx=0.64, rely=0.67)
@@ -118,18 +123,20 @@ class GUI:
         # ================================================================== #
         tk.Button(self.root, text="Train Model", width=10, fg="Black",
                   bg="light Gray", command=lambda: self.train_model())\
-            .place(relx=0.03, rely=0.80)
-        tk.Button(self.root, text="Learning", width=10, fg="Black",
-                  bg="light Gray", command=lambda: self.learning())\
-            .place(relx=0.35, rely=0.80)
+            .place(relx=0.03, rely=0.84)
+        tk.Button(self.root, text="Init Network", width=10, fg="Black",
+                  bg="light Gray", command=lambda: self.init())\
+            .place(relx=0.27, rely=0.84)
         tk.Button(self.root, text="Testing", width=10, fg="Black",
                   bg="light Gray", command=lambda: self.testing())\
-            .place(relx=0.67, rely=0.80)
+            .place(relx=0.51, rely=0.84)
+        tk.Button(self.root, text="Learning", width=10, fg="Black",
+                  bg="light Gray", command=lambda: self.learn()) \
+            .place(relx=0.75, rely=0.84)
 
     def train_model(self):
         # Multi Layer Perceptron
         if self.tab_control.index(self.tab_control.select()) == 0:
-            back_propagation = BackPropagation()
             num_hidden_layer = self.NumberOfHiddenLayers.get()
             num_neurons_layer = self.NumberOfNeuronsInEachLayer.get()
             learn_rate = self.learnRate.get()
@@ -141,8 +148,11 @@ class GUI:
             if stopping_criteria == 2:
                 threshold = self.errorThreshold.get()
 
+            # ٍ Shuffling Input Data
+            self.PCA_TFeatures = self.back_propagation.shuffle_data(
+                self.PCA_TFeatures)
             # Training The NN
-            back_propagation.main_algorithm(self.PCA_TFeatures, learn_rate,
+            self.back_propagation.main_algorithm(self.PCA_TFeatures, learn_rate,
                                             epoch_number, bias, threshold,
                                             stopping_criteria,
                                             activation_function,
@@ -151,11 +161,15 @@ class GUI:
                                             25)
         # Radial Basis Function
         else:
-            # TODO: Implement RBF
-            RBF = RadialBasisFunction(self.PCA_TFeatures,self.learn_rate,
+            RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate,
                                       self.epochsNo,self.errorThreshold,
                                       self.NumberOfNeuronsRBF)
             weights = RBF.mseTrain() #weights[ [numHiddenNeurons] ] -> outter list size equals number of output neurons, inner  equals num HiddenNeurons
 
             # RBF.mseTest(features,weights)      this calling for testing
         return 0
+
+    def init(self):
+        self.back_propagation = BackPropagation(
+            self.NumberOfNeuronsInEachLayer.get(),
+            self.NumberOfHiddenLayers.get())

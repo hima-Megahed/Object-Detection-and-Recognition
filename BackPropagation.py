@@ -6,51 +6,43 @@ from DataManipulation import TrainingData
 
 class BackPropagation:
 
-    def __init__(self):
-        self.weights = {}
-        self.weights_inputs = {}
-        self.errors = []
+    def __init__(self, num_neurons_layer, num_hidden_layer):
+        # Initializing weight vector with random values
+        self.Network = self.initialize_network(num_neurons_layer,
+                                               num_hidden_layer)
 
     def main_algorithm(self, features, eta, epochs, bias, threshold,
                        stopping_criteria, activation_function,
                        num_hidden_layer, num_neurons_layer, n_samples):
         """This function will run the back propagation algorithm"""
 
-        # Initializing weight vector with random values
-        weights, weights_inputs = self.initialize(num_hidden_layer,
-                                                  num_neurons_layer)
 
-        if stopping_criteria == 1:  # Number of epochs
+
+        # Number of epochs
+        if stopping_criteria == 1:
+            minsum = 50000000.0
             # loop through number of epochs
             for i in range(epochs):
-                sample_ind = 1
+                sample_ind = 0
+                sum_error = 0
                 # loop through number of samples
                 for sample in features:
-                    # getting input vector
-                    input_vector = sample
-                    desired_output = self.__get_sample_class(sample_ind)
-                    weights_inputs = self.net_input(input_vector,
-                                                    weights, weights_inputs,
-                                                    bias, num_hidden_layer,
-                                                    num_neurons_layer,
-                                                    activation_function)
-                    error = self.propagate_error(weights_inputs, weights,
-                                                 num_hidden_layer,
-                                                 num_neurons_layer,
-                                                 desired_output,
-                                                 activation_function)
+                    outputs = self.forward_propagate(self.Network, sample,
+                                                     bias, activation_function)
 
-                    weights = self.update_weights(weights_inputs, weights,
-                                                  num_hidden_layer,
-                                                  num_neurons_layer, eta,
-                                                  error, bias, input_vector)
-
-                    self.weights = weights
-                    self.errors = error
-                    self.weights_inputs = weights_inputs
+                    expected = self.__get_expected(sample_ind)
+                    sum_error += sum([(expected[i] - outputs[i]) ** 2 for i in
+                                      range(len(expected))])
+                    self.backward_propagate_error(self.Network,
+                                                  expected,
+                                                  activation_function)
+                    self.update_weights(self.Network, sample, eta, bias)
                     sample_ind += 1
-
-        else:  # Threshold MSE
+                if minsum > sum_error:
+                    minsum = sum_error
+                print('> epoch=%d, error=%.5f, Minimum is: %.5f'% (i, sum_error, minsum))
+        # Threshold MSE
+        elif stopping_criteria == 2:
             epoch_ind = 1
             mse = 10000000.0
             mse_errors = [0] * 5
@@ -59,28 +51,14 @@ class BackPropagation:
                 sample_ind = 1
                 # loop through number of samples
                 for sample in features:
-                    # getting input vector
-                    input_vector = sample
-                    desired_output = self.__get_sample_class(sample_ind)
-                    weights_inputs = self.net_input(input_vector,
-                                                    weights, weights_inputs,
-                                                    bias, num_hidden_layer,
-                                                    num_neurons_layer,
-                                                    activation_function)
-                    error = self.propagate_error(weights_inputs, weights,
-                                                 num_hidden_layer,
-                                                 num_neurons_layer,
-                                                 desired_output,
-                                                 activation_function)
+                    self.forward_propagate(self.Network, sample,
+                                           bias, activation_function)
 
-                    weights = self.update_weights(weights_inputs, weights,
-                                                  num_hidden_layer,
-                                                  num_neurons_layer, eta,
-                                                  error, bias, input_vector)
-
-                    self.weights = weights
-                    self.errors = error
-                    self.weights_inputs = weights_inputs
+                    expected = self.__get_expected(sample_ind)
+                    self.backward_propagate_error(self.Network,
+                                                  expected,
+                                                  activation_function)
+                    self.update_weights(self.Network, sample, eta, bias)
                     sample_ind += 1
 
                 mse, mse_errors = self.compute_mean_square_error(
@@ -92,6 +70,45 @@ class BackPropagation:
             pi = 4
 
             #return MSE_arr, epochs_arr
+        # Cross Validation
+        else:
+            # loop through number of epochs
+            for i in range(epochs):
+                sample_ind = 0
+                model_output = actual_output = []
+                # loop through number of samples
+                for sample_ind in range(20):
+                    sample = features[sample_ind]
+                    self.forward_propagate(self.Network, sample,
+                                           bias, activation_function)
+
+                    expected = self.__get_expected(sample_ind)
+                    self.backward_propagate_error(self.Network,
+                                                  expected,
+                                                  activation_function)
+                    self.update_weights(self.Network, sample, eta, bias)
+                    sample_ind += 1
+
+                # Validate after 50 epochs
+                if i % 50 == 0 and i != 0:
+                    model_output, actual_output = self.cross_validate(
+                        features, bias, activation_function, num_hidden_layer,
+                        num_neurons_layer)
+                    # Computing Confusion Matrix
+                    confusion_matrix = [[0 for x in range(5)]
+                                        for y in range(5)]
+                    for s in range(len(model_output)):
+                        y = actual_output[s]
+                        confusion_matrix[y - 1][model_output[s] - 1] += 1
+                    print("Model Output: ", model_output)
+                    print("Actual Output: ", actual_output)
+                    # Calculating Overall accuracy
+                    # 5 number of tests
+                    acc = (np.sum([confusion_matrix[i][i]
+                                  for i in range(5)]) / 5) * 100
+                    print(acc, '%')
+
+                    asdf = 0
 
     def net_input(self, input_vector, weight, weights_inputs, bias,
                   num_hidden_layer, num_neurons_layer, activation_function):
@@ -105,7 +122,7 @@ class BackPropagation:
             if i == 0:
                 # Number of neurons in first layer of hidden layers
                 for j in range(num_neurons_layer):
-                    vsum = 0.0  # sum of weights in single node
+                    vsum = 0  # sum of weights in single node
                     # Number of weights 25 in the node in first layer of
                     # hidden layers 24 + 1 bias
                     for a in range(0, 25):
@@ -171,8 +188,8 @@ class BackPropagation:
         return err_sum, mse_errors
 
     @staticmethod
-    def sigmoid(x):
-        return 1 / (1 + np.exp(-x))
+    def sigmoid(net):
+        return 1.0 / (1.0 + np.exp(-net))
 
     @staticmethod
     def hyperbolic_tangent(x):
@@ -232,8 +249,8 @@ class BackPropagation:
             return self.hyperbolic_tangent_derivative(x)
 
     @staticmethod
-    def sigmoid_derivative(x):
-        return x * (1-x)
+    def sigmoid_derivative(net):
+        return net * (1.0 - net)
 
     @staticmethod
     def hyperbolic_tangent_derivative(x):
@@ -282,7 +299,7 @@ class BackPropagation:
         return error
 
     @staticmethod
-    def update_weights(weights_inputs, weight, num_hidden_layer
+    def update_weights1(weights_inputs, weight, num_hidden_layer
                        , num_neurons_layer, eta, error, bias, input_vector):
         ind = len(weight)
         # Number of neurons in output layer + 1 because array is 0 based
@@ -349,31 +366,154 @@ class BackPropagation:
                     ind_e -= 1
         return weight
 
-    def main_algorithm_testing(self, features, bias, activation_function,
-                               num_hidden_layer,num_neurons_layer):
-        output = []
-        sample_ind = 1
-        for sample in features:
+    def cross_validate(self, features, bias, activation_function,
+                       num_hidden_layer,num_neurons_layer):
+        model_output = []
+        actual_output = []
+        for sample_ind in range(20, 25):
             # getting input vector
-            input_vector = sample
-            desired_output = self.__get_sample_class(sample_ind)
-            weights_inputs = self.net_input(input_vector,
-                                            self.weights, self.weights_inputs,
-                                            bias, num_hidden_layer,
-                                            num_neurons_layer,
-                                            activation_function)
-
-        return output
+            sample = features[sample_ind]
+            outputs = self.forward_propagate(self.Network, sample, bias,
+                                             activation_function)
+            f = outputs.index(max(outputs))
+            model_output.append(outputs.index(max(outputs)) + 1)
+            actual_output.append(self.get_sample_ind_(sample_ind))
+        return model_output, actual_output
 
     @staticmethod
-    def __get_sample_class(num):
-        if 1 <= num <= 5:
+    def __get_expected(num):
+        if num in [0, 5, 10, 15, 20]:
+            return [1, 0, 0, 0, 0]
+        elif num in [1, 6, 11, 16, 21]:
+            return [0, 1, 0, 0, 0]
+        elif num in [2, 7, 12, 17, 22]:
+            return [0, 0, 1, 0, 0]
+        elif num in [3, 8, 13, 18, 23]:
+            return [0, 0, 0, 1, 0]
+        elif num in [4, 9, 14, 19, 24]:
+            return [0, 0, 0, 0, 1]
+
+    @staticmethod
+    def shuffle_data(data):
+        new_data = [
+            data[0],
+            data[5],
+            data[10],
+            data[15],
+            data[20],
+            data[1],
+            data[6],
+            data[11],
+            data[16],
+            data[21],
+            data[2],
+            data[7],
+            data[12],
+            data[17],
+            data[22],
+            data[3],
+            data[8],
+            data[13],
+            data[18],
+            data[23],
+            data[4],
+            data[9],
+            data[14],
+            data[19],
+            data[24],
+        ]
+        return new_data
+
+    @staticmethod
+    def get_sample_ind_(index):
+        if index in [0, 5, 10, 15, 20]:
             return 1
-        elif 6 <= num <= 10:
+        elif index in [1, 6, 11, 16, 21]:
             return 2
-        elif 11 <= num <= 15:
+        elif index in [2, 7, 12, 17, 22]:
             return 3
-        elif 16 <= num <= 20:
+        elif index in [3, 8, 13, 18, 23]:
             return 4
-        else:
+        elif index in [4, 9, 14, 19, 24]:
             return 5
+
+    #########################################################################
+    @staticmethod
+    def initialize_network(n_hidden_neurons, n_hidden_layers):
+        network = list()
+        first_hidden_layer = [{'weights': [np.random.rand(1)[0]
+                                           for i in range(24 + 1)]}
+                              for i in range(n_hidden_neurons)]
+        network.append(first_hidden_layer)
+        for j in range(n_hidden_layers - 1):
+            hidden_layer = [{'weights': [np.random.rand(1)[0]
+                                         for i in range(n_hidden_neurons + 1)]}
+                            for i in range(n_hidden_neurons)]
+            network.append(hidden_layer)
+        output_layer = [
+            {'weights': [np.random.rand(1)[0]
+                         for i in range(n_hidden_neurons + 1)]}
+            for i in range(5)]
+        network.append(output_layer)
+        return network
+
+    # Calculate neuron activation for an input
+    @staticmethod
+    def activate(weights, inputs, bias):
+        activation = weights[0] * bias
+        for i in range(1, len(weights)):
+            activation += weights[i] * inputs[i-1]
+        return activation
+
+    # Transfer neuron activation
+    def transfer(self, net, activation_method):
+        return self.sigmoid(net) if activation_method == 1 \
+            else self.hyperbolic_tangent(net)
+
+    # Forward propagate input to a network output
+    def forward_propagate(self, network, row_data, bias, activation_method):
+        inputs = row_data
+        for layer in network:
+            new_inputs = []
+            for neuron in layer:
+                net = self.activate(neuron['weights'], inputs, bias)
+                neuron['output'] = self.transfer(net, activation_method)
+                new_inputs.append(neuron['output'])
+            inputs = new_inputs
+        return inputs
+
+    # Calculate the derivative of an neuron output
+    def transfer_derivative(self, output, activation_method):
+        return self.sigmoid_derivative(output) if activation_method == 1 \
+            else self.hyperbolic_tangent_derivative(output)
+
+    # Back propagate error and store in neurons
+    def backward_propagate_error(self, network, expected, activation_method):
+        for i in reversed(range(len(network))):
+            layer = network[i]
+            errors = list()
+            if i == len(network) - 1:
+                for j in range(len(layer)):
+                    neuron = layer[j]
+                    errors.append(expected[j] - neuron['output'])
+            else:
+                for j in range(len(layer)):
+                    error = 0.0
+                    for neuron in network[i + 1]:
+                        error += (neuron['weights'][j] * neuron['delta'])
+                    errors.append(error)
+            for j in range(len(layer)):
+                neuron = layer[j]
+                neuron['delta'] = errors[j] * self.transfer_derivative(
+                    neuron['output'], activation_method)
+
+    def update_weights(self, network, data_row, l_rate, bias):
+        for i in range(len(network)):
+            inputs = data_row[:-1]
+            if i != 0:
+                inputs = [neuron['output'] for neuron in network[i - 1]]
+            for neuron in network[i]:
+                for j in range(1, len(inputs)):
+                    neuron['weights'][j] += l_rate * neuron['delta'] \
+                                            * inputs[j]
+                neuron['weights'][0] += l_rate * neuron['delta'] * bias
