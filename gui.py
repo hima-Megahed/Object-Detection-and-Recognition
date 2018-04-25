@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 from BackPropagation import BackPropagation
-from DataManipulation import TrainingData
+from DataManipulation import TrainingData, TestingData
 import numpy as np
 from RBF import RadialBasisFunction
 
@@ -38,6 +38,10 @@ class GUI:
         self.TrainingData = TrainingData.read(training_tmp)
         self.PCA_TFeatures = TrainingData.apply_pca(training_tmp)
         self.back_propagation = None
+
+        testing_tmp = TestingData()
+        TestingData.read(testing_tmp)
+        self.PCA_Test_Features = TestingData.apply_pca(testing_tmp)
 
         self.initialize_components()
         self.root.mainloop()
@@ -128,11 +132,8 @@ class GUI:
                   bg="light Gray", command=lambda: self.init())\
             .place(relx=0.27, rely=0.84)
         tk.Button(self.root, text="Testing", width=10, fg="Black",
-                  bg="light Gray", command=lambda: self.testing())\
+                  bg="light Gray", command=lambda: self.test())\
             .place(relx=0.51, rely=0.84)
-        tk.Button(self.root, text="Learning", width=10, fg="Black",
-                  bg="light Gray", command=lambda: self.learn()) \
-            .place(relx=0.75, rely=0.84)
 
     def train_model(self):
         # Multi Layer Perceptron
@@ -161,15 +162,22 @@ class GUI:
                                             25)
         # Radial Basis Function
         else:
-            RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate,
-                                      self.epochsNo,self.errorThreshold,
-                                      self.NumberOfNeuronsRBF)
+            RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate.get(),
+                                      self.epochsNo.get(),self.errorThreshold.get(),
+                                      self.NumberOfNeuronsRBF.get())
             weights = RBF.mseTrain() #weights[ [numHiddenNeurons] ] -> outter list size equals number of output neurons, inner  equals num HiddenNeurons
 
-            # RBF.mseTest(features,weights)      this calling for testing
+            RBF.mseTest(self.PCA_Test_Features, weights)      # this calling for testing
+
         return 0
 
     def init(self):
         self.back_propagation = BackPropagation(
             self.NumberOfNeuronsInEachLayer.get(),
             self.NumberOfHiddenLayers.get())
+
+    def test(self):
+        res = self.back_propagation.test(self.PCA_Test_Features,
+                                         self.bias.get(),
+                                         self.activationFunction.get())
+        return 0

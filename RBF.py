@@ -9,7 +9,7 @@ class RadialBasisFunction:
         self.numEpochs = numEpochs
         self.threshold = threshold
         self.numHiddenNeurons = numHiddenNeurons
-        self.clusteringData = K_Means(features,self.numNeurons)
+        self.clusteringData = K_Means(features,self.numHiddenNeurons)
         self.centroids = K_Means.Centroids
 
     def mseTrain(self):
@@ -69,7 +69,7 @@ class RadialBasisFunction:
             w = weights[output_neuron]
             v[output_neuron] = self.net_input(features, w)
         y = np.argmax(self.softmax(v))
-        return y+1
+        return y + 1
 
     def net_input(self, x, weight):
         """Calculate net input"""
@@ -91,7 +91,7 @@ class RadialBasisFunction:
             return 5
 
     def update_features(self):
-        sigma,max_distance = self.compute_igma()
+        sigma,max_distance = self.compute_sigma()
         new_features = [[0 in range(self.features)] for i in range(self.numHiddenNeurons)]
         for i in range(len(new_features)):
             for j in range(0,len(self.features[i])):

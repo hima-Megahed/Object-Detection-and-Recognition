@@ -56,15 +56,16 @@ class TrainingData:
         self.__PCA_TFeatures = np.ndarray(shape=(25, 2500), dtype=float)
 
     def read(self):
-        img = misc.imread(self.__TESTING_PATH + "\T1 - Cat Laptop .png")
+        # img = misc.imread(self.__TESTING_PATH + "\T1 - Cat Laptop .png")
 
         img_data = []
         # Reading Data From Training File
         for i in range(25):
-            # img = imread(self.__Training_Pics[i], as_grey=True)
             img = misc.imread(self.__Training_Pics[i], mode='L')
+            # plt.imshow(img, cmap=plt.get_cmap('gray'))
+            # plt.show()
             # Resizing Image to 50x50
-            img = resize(img, (50, 50))
+            img = misc.imresize(img, (50, 50))
             # Converting Image from 2D to 1D
             img = np.reshape(img, 2500)
 
@@ -124,18 +125,41 @@ class TrainingData:
         self.__PCA_TFeatures = sklearn_pca.fit_transform(self.__TrainingData)
         return self.__PCA_TFeatures
 
-    def get_distinct_colors(self, img):
-        arr = []
-        for i in range(img.shape[0]):
-            for j in range(img.shape[1]):
-                if len(arr) is 0 or self.new_color(arr, img[i][j]):
-                    arr.append(img[i][j])
 
-        return arr
+class TestingData:
+    def __init__(self):
+        self.__TESTING_PATH = "F:\GitHub - Projects" \
+                              "\Object-Detection-and-Recognition\Data set" \
+                              "\Testing"
+        self.__CUSTOM_TESTING_PATH = "F:\GitHub - Projects" \
+                               "\Object-Detection-and-Recognition\Data set" \
+                               "\Custom Testing"
+        self.__Testing_Pics = [
+            'Cat Test1.png',
+            'Laptop Test1.png',
+            'Model1 - Cat.jpg',
+            'Model5 - Cat.jpg',
+            'Model14 - Apple.jpg',
+            'Model15 - Apple.jpg',
+            'Model17 - Car.jpg',
+            'Model20 - Car.jpg',
+            'Model21 - Helicopter.jpg',
+            'Model24 - Helicopter.jpg'
+        ]
+        self.__TestingData = np.ndarray(shape=(25, 2500), dtype=float)
+        self.__PCA_TestFeatures = np.ndarray(shape=(25, 24), dtype=float)
 
-    @staticmethod
-    def new_color(arr, pixel):
-        for c in arr:
-            if c[0] == pixel[0] and c[1] == pixel[1] and c[2] == pixel[2]:
-                return False
-        return True
+    def read(self):
+        # img = imread(self.__Training_Pics[i], as_grey=True)
+        img = misc.imread(self.__CUSTOM_TESTING_PATH + '/' +self.__Testing_Pics[2], mode='L')
+        # Resizing Image to 50x50
+        img = misc.imresize(img, (50, 50))
+        # Converting Image from 2D to
+        img = np.reshape(img, 2500)
+        self.__TestingData[0] = img
+        return self.__TestingData
+
+    def apply_pca(self):
+        sklearn_pca = sklearnPCA(n_components=24)
+        self.__PCA_TestFeatures= sklearn_pca.fit_transform(self.__TestingData)
+        return self.__PCA_TestFeatures[0]
