@@ -5,7 +5,7 @@ from BackPropagation import BackPropagation
 from DataManipulation import TrainingData, TestingData
 import numpy as np
 from RBF import RadialBasisFunction
-
+from test import PCA
 
 class GUI:
     def __init__(self):
@@ -166,10 +166,24 @@ class GUI:
                                             25)
         # Radial Basis Function
         else:
+
+            '''for i in range(0,len(self.PCA_TFeatures)):
+                print("Sample ", i,end="\n")
+                print(self.PCA_TFeatures[i])
+            print("\n")
+
+
+            self.PCA_TFeatures = np.array(PCA).tolist()'''
+
+
             self.RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate.get(),
                                       self.epochsNo.get(),self.errorThresholdRBF.get(),
                                       self.NumberOfNeuronsRBF.get())
+
             self.RBFweights, self.RBFcentroids = self.RBF.mseTrain()
+            print(self.RBFweights)
+            print(self.RBFcentroids)
+            it = 0
 
     def test(self):
         if self.tab_control.index(self.tab_control.select()) == 0:
@@ -177,10 +191,22 @@ class GUI:
                                              self.bias.get(),
                                              self.activationFunction.get())
         else:
+
             res = self.RBF.mseTest(self.PCA_Test_Features,
                                    self.RBFweights,
                                    self.RBFcentroids)
-        [print(i) for i in res]
+            for i in range(len(res)):
+                print(i + 1, " ", res[i], end='\n')
+
+            '''when run the app call run func'''
+            res = self.RBF.run(self.PCA_Test_Features[0],
+                                   self.RBFweights,
+                                   self.RBFcentroids)
+            print(res)
+
+
+
+
 
     @staticmethod
     def pca_graph():

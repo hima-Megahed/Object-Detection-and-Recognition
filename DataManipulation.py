@@ -19,7 +19,7 @@ class TrainingData:
     def __init__(self):
         self.__TRAINING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/Training"
         self.__TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/" \
-                              "\Testing"
+                              "/Testing"
         # changing directory
         os.chdir(self.__TRAINING_PATH)
         self.__Training_Pics = [
@@ -125,8 +125,8 @@ class TrainingData:
 
 class TestingData:
     def __init__(self):
-        self.__TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set\Testing"
-        self.__CUSTOM_TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/Custom Testing"
+        self.__TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/Testing"
+        self.__CUSTOM_TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/Custom Testing/"
         self.__Testing_Pics = [
             '1/T1 - Cat Laptop .png4.bmp',
             '1/T2 - Cat Laptop.png2.bmp',

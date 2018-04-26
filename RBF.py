@@ -84,14 +84,16 @@ class RadialBasisFunction:
 
     def mseTest(self,features, weights,centroids):
         literal_output = list()
-        for sample in features:
+        self.features = features
+        self.update_features()
+        for sample in range(len(self.features)):
             v = [0 for i in range(5)]
-            self.features = sample
+            #self.features = sample
             self.centroids = centroids
-            self.update_features_test()
+            #self.update_features_test()
             for output_neuron in range(5):
                 w = weights[output_neuron]
-                v[output_neuron] = self.net_input(self.features, w)
+                v[output_neuron] = self.net_input(self.features[sample], w)
             probabilities = self.softmax(v)
             #sum = np.sum(probabilities)
             f = np.argmax(probabilities) + 1
@@ -105,6 +107,33 @@ class RadialBasisFunction:
                 literal_output.append("Car")
             else:
                 literal_output.append("Helicopter")
+
+        return literal_output
+
+    def run(self,features,weights,centroids):
+        literal_output = "output"
+        self.features = features
+        self.update_features_test(features)
+        v = [0 for i in range(5)]
+        # self.features = sample
+        self.centroids = centroids
+        # self.update_features_test()
+        for output_neuron in range(5):
+            w = weights[output_neuron]
+            v[output_neuron] = self.net_input(self.features, w)
+        probabilities = self.softmax(v)
+        # sum = np.sum(probabilities)
+        f = np.argmax(probabilities) + 1
+        if f == 1:
+            literal_output = "Cat"
+        elif f == 2:
+            literal_output = "Laptop"
+        elif f == 3:
+            literal_output = "Apple"
+        elif f == 4:
+            literal_output = "Car"
+        else:
+            literal_output = "Helicopter"
 
         return literal_output
 
@@ -131,19 +160,21 @@ class RadialBasisFunction:
         sigma,max_distance = self.compute_sigma()
         num_samples = len(self.features)
         new_features = [[0 for i in range(self.numHiddenNeurons)] for i in range(num_samples)]
+        print("features \n ")
         for i in range(num_samples):
             for j in range(0,self.numHiddenNeurons):
                 r_square = self.EculideanDistance(self.features[i],self.centroids[j]) ** 2
                 double_sigma_square = 2 * (sigma ** 2)
                 mo= math.exp(-1 * (r_square/double_sigma_square))
                 new_features[i][j] = math.exp(-1 * (r_square/double_sigma_square))
-
+            print(new_features[i],end="\n")
         self.features = new_features
+        #print("features \n "   ,self.features)
 
-    def update_features_test(self):
+    def update_features_test(self,features):
         sigma,max_distance = self.compute_sigma()
         new_features = [0 for i in range(self.numHiddenNeurons)]
-
+        self.features = features
         for j in range(0,self.numHiddenNeurons):
             r_square = self.EculideanDistance(self.features,self.centroids[j]) ** 2
             double_sigma_square = 2 * (sigma ** 2)
