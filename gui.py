@@ -21,7 +21,9 @@ class GUI:
         self.root.title("Object Detection")
         self.root.geometry("500x500")
         self.errorThreshold = tk.DoubleVar(self.root)
-        self.errorThreshold.set(0.001)
+        self.errorThreshold.set(0.0004)
+        self.errorThresholdRBF = tk.DoubleVar(self.root)
+        self.errorThresholdRBF.set(0.092)
         self.NumberOfHiddenLayers = tk.IntVar(self.root)
         self.NumberOfHiddenLayers.set(2)
         self.NumberOfNeuronsInEachLayer = tk.IntVar(self.root)
@@ -33,11 +35,12 @@ class GUI:
         self.NumberOfNeuronsRBF = tk.IntVar()
         self.NumberOfNeuronsRBF.set(4)
         self.tab_control = ttk.Notebook(self.root)
-
+        self.RBFweights = self.RBFcentroids = None
+        self.RBF = None
         training_tmp = TrainingData()
         self.TrainingData = TrainingData.read(training_tmp)
         self.PCA_TFeatures = TrainingData.apply_pca(training_tmp)
-        self.back_propagation = None
+        self.back_propagation = BackPropagation()
 
         testing_tmp = TestingData()
         TestingData.read(testing_tmp)
@@ -114,7 +117,7 @@ class GUI:
             .place(relx=0.64, rely=0.1)
         tk.Label(page2, text="MSE Threshold:") \
             .place(relx=0.03, rely=0.2)
-        tk.Entry(page2, width=17, textvariable=self.errorThreshold) \
+        tk.Entry(page2, width=17, textvariable=self.errorThresholdRBF) \
             .place(relx=0.64, rely=0.2)
         tk.Label(page2, text="Enter Learning Rate(eta):") \
             .place(relx=0.03, rely=0.3)
@@ -128,8 +131,8 @@ class GUI:
         tk.Button(self.root, text="Train Model", width=10, fg="Black",
                   bg="light Gray", command=lambda: self.train_model())\
             .place(relx=0.03, rely=0.84)
-        tk.Button(self.root, text="Init Network", width=10, fg="Black",
-                  bg="light Gray", command=lambda: self.init())\
+        tk.Button(self.root, text="Draw PCA Graph", width=13, fg="Black",
+                  bg="light Gray", command=lambda: self.pca_graph())\
             .place(relx=0.27, rely=0.84)
         tk.Button(self.root, text="Testing", width=10, fg="Black",
                   bg="light Gray", command=lambda: self.test())\
@@ -138,6 +141,7 @@ class GUI:
     def train_model(self):
         # Multi Layer Perceptron
         if self.tab_control.index(self.tab_control.select()) == 0:
+
             num_hidden_layer = self.NumberOfHiddenLayers.get()
             num_neurons_layer = self.NumberOfNeuronsInEachLayer.get()
             learn_rate = self.learnRate.get()
@@ -162,26 +166,24 @@ class GUI:
                                             25)
         # Radial Basis Function
         else:
-            RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate.get(),
-                                      self.epochsNo.get(),self.errorThreshold.get(),
+            self.RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate.get(),
+                                      self.epochsNo.get(),self.errorThresholdRBF.get(),
                                       self.NumberOfNeuronsRBF.get())
-            weights,centroids = RBF.mseTrain() #weights[ [numHiddenNeurons] ] -> outter list size equals number of output neurons, inner  equals num HiddenNeurons
-            '''you may be need to save the weights and centroids in a file and when you test an image load the weights 
-            because in the pratical exam dr. will not train it.he'll test the project and may be ask to train'''
-            test_class = RBF.mseTest(self.PCA_Test_Features, weights,centroids)      # this calling for testing
-            '''when you input an image and after you extract the features of each object in the image 
-            call the RBF.mseTest() function and for every object pass its features in the first parameter 
-            and the weights in the second parameter and the output of the function is number of the class '''
-            print("test class = ",test_class)
-        return 0
-
-    def init(self):
-        self.back_propagation = BackPropagation(
-            self.NumberOfNeuronsInEachLayer.get(),
-            self.NumberOfHiddenLayers.get())
+            self.RBFweights, self.RBFcentroids = self.RBF.mseTrain()
 
     def test(self):
-        res = self.back_propagation.test(self.PCA_Test_Features,
-                                         self.bias.get(),
-                                         self.activationFunction.get())
-        return 0
+        if self.tab_control.index(self.tab_control.select()) == 0:
+            res = self.back_propagation.test(self.PCA_Test_Features,
+                                             self.bias.get(),
+                                             self.activationFunction.get())
+        else:
+            res = self.RBF.mseTest(self.PCA_Test_Features,
+                                   self.RBFweights,
+                                   self.RBFcentroids)
+        [print(i) for i in res]
+
+    @staticmethod
+    def pca_graph():
+        training_tmp = TrainingData()
+        TrainingData.read(training_tmp)
+        TrainingData.graph_pcs(training_tmp)

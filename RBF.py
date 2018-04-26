@@ -13,6 +13,7 @@ class RadialBasisFunction:
         self.centroids = self.clusteringData.Centroids
 
     def mseTrain(self):
+        min_mse = 100000
         epoch = 0
         #weights = [[np.random.rand(1)[0] in range(self.numHiddenNeurons)] for i in range(5)]
         weights = [[] for i in range(5)]
@@ -21,8 +22,8 @@ class RadialBasisFunction:
                 x = np.random.rand(1)[0]
                 weights[i].append(x)
             #weights[i] = [x for j in range(self.numHiddenNeurons)]
-        for w in weights:
-            print(w)
+        # for w in weights:
+            # print(w)
         self.update_features()
         num_samples = len(self.features)
         while epoch < self.numEpochs :
@@ -49,7 +50,10 @@ class RadialBasisFunction:
 
             epoch = epoch + 1
             errorMSE = self.updateError(weights,self.features)
-            if errorMSE < self.threshold:
+            if min_mse > errorMSE:
+                min_mse = errorMSE
+            print(">Epoch:{}, Mean Square Error:{}, Min MSE:{}".format(epoch, errorMSE, min_mse))
+            if errorMSE < self.threshold and epoch > 100:
                 break
 
         return weights,self.centroids
@@ -79,17 +83,30 @@ class RadialBasisFunction:
         return average_mse
 
     def mseTest(self,features, weights,centroids):
-        v = [0 for i in range(5)]
-        self.features = features
-        self.centroids = centroids
-        self.update_features_test()
-        for output_neuron in range(5):
-            w = weights[output_neuron]
-            v[output_neuron] = self.net_input(self.features, w)
-        probabilities = self.softmax(v)
-        #sum = np.sum(probabilities)
-        y = np.argmax(probabilities)
-        return (y + 1)
+        literal_output = list()
+        for sample in features:
+            v = [0 for i in range(5)]
+            self.features = sample
+            self.centroids = centroids
+            self.update_features_test()
+            for output_neuron in range(5):
+                w = weights[output_neuron]
+                v[output_neuron] = self.net_input(self.features, w)
+            probabilities = self.softmax(v)
+            #sum = np.sum(probabilities)
+            f = np.argmax(probabilities) + 1
+            if f == 1:
+                literal_output.append("Cat")
+            elif f == 2:
+                literal_output.append("Laptop")
+            elif f == 3:
+                literal_output.append("Apple")
+            elif f == 4:
+                literal_output.append("Car")
+            else:
+                literal_output.append("Helicopter")
+
+        return literal_output
 
     def net_input(self, x, weight):
         """Calculate net input"""
@@ -99,13 +116,13 @@ class RadialBasisFunction:
         return v
 
     def get_sample_class(self,num):
-        if 1 <= num <= 5:
+        if 0 <= num <= 4:
             return 1
-        elif 6 <= num <= 10:
+        elif 5 <= num <= 9:
             return 2
-        elif 11 <= num <= 15:
+        elif 10 <= num <= 14:
             return 3
-        elif 16 <= num <= 20:
+        elif 15 <= num <= 19:
             return 4
         else:
             return 5
@@ -162,7 +179,7 @@ class RadialBasisFunction:
         SquaredDistance = 0.0
         for i in range(len(Centroid)):
             SquaredDistance += (Centroid[i] - Feature[i])**2
-            print(Centroid[i] , " " , Feature[i] ,"SquaredDistance = " ,SquaredDistance ,end=" \n")
-        print(SquaredDistance,"  ",math.sqrt(SquaredDistance))
+            # print(Centroid[i] , " " , Feature[i] ,"SquaredDistance = " ,SquaredDistance ,end=" \n")
+        # print(SquaredDistance,"  ",math.sqrt(SquaredDistance))
 
         return math.sqrt(SquaredDistance)

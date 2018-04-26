@@ -6,19 +6,26 @@ from DataManipulation import TrainingData
 
 class BackPropagation:
 
-    def __init__(self, num_neurons_layer, num_hidden_layer):
+    def __init__(self):
         # Initializing weight vector with random values
-        self.Network = self.initialize_network(num_neurons_layer,
-                                               num_hidden_layer)
+        self.Network = None
         self.__best_Network = None
+        self.__best_initialize_Network = None
 
     def main_algorithm(self, features, eta, epochs, bias, threshold,
                        stopping_criteria, activation_function,
                        num_hidden_layer, num_neurons_layer, n_samples):
         """This function will run the back propagation algorithm"""
 
+        print("The Network will train using: BackPropagation Classifier")
+
+        # Initialize Neural Network
+        self.Network = self.initialize_network(num_neurons_layer,
+                                num_hidden_layer)
         # Number of epochs
         if stopping_criteria == 1:
+            print("Stopping condition: Number of Epochs")
+
             minsum = 50000000.0
             # loop through number of epochs
             for i in range(epochs):
@@ -43,12 +50,14 @@ class BackPropagation:
                 print('> epoch=%d, error=%.5f, Minimum is: %.5f'% (i, sum_error, minsum))
         # Threshold MSE
         elif stopping_criteria == 2:
+            print("Stopping condition: Mean Square Error")
             epoch_ind = 1
             mse = 10000000.0
             mse_errors = [0] * 5
+            min_mse = 100000
 
-            while epoch_ind < 1000:
-                sample_ind = 1
+            while epoch_ind < 2000:
+                sample_ind = 0
                 # loop through number of samples
                 for sample in features:
                     self.forward_propagate(self.Network, sample,
@@ -62,20 +71,21 @@ class BackPropagation:
                     sample_ind += 1
 
                 mse, mse_errors = self.compute_mean_square_error(
-                    self.errors[-5:], mse_errors, n_samples)
+                    self.Network[-1:][0], mse_errors, n_samples)
+                if min_mse > mse:
+                    min_mse = mse
+                    self.__best_Network = self.Network
+                print("> epoch:{}, Mean Square Error:{}, Minimum MSE:{}".format(epoch_ind, mse, min_mse))
                 epoch_ind += 1
                 if mse <= threshold:
-                    po = 0
                     break
-            pi = 4
 
-            #return MSE_arr, epochs_arr
         # Cross Validation
         else:
+            print("Stopping condition: Cross Validation")
             max_acc = 0
             # loop through number of epochs
             for i in range(epochs):
-                sample_ind = 0
                 model_output = actual_output = []
                 # loop through number of samples
                 for sample_ind in range(20):
@@ -88,7 +98,6 @@ class BackPropagation:
                                                   expected,
                                                   activation_function)
                     self.update_weights(self.Network, sample, eta, bias)
-                    sample_ind += 1
 
                 # Validate after 50 epochs
                 if i % 50 == 0 and i != 0:
@@ -119,11 +128,12 @@ class BackPropagation:
         err_sum = 0.0
         tmp = []
         for i in range(len(error)):
-            mse_errors[i] += error[i]**2
+            mse_errors[i] += error[i]['delta']**2
 
         for i in range(len(mse_errors)):
             tmp.append(mse_errors[i] / (2 * n_samples))
         err_sum = np.sum(tmp) / 5
+
         return err_sum, mse_errors
 
     @staticmethod
@@ -303,17 +313,21 @@ class BackPropagation:
                                             * inputs[j-1]
                 neuron['weights'][0] += l_rate * neuron['delta'] * bias
 
-    def test(self, sample, bias, activation_function):
-        outputs = self.forward_propagate(self.__best_Network, sample, bias,
-                                         activation_function)
-        f = outputs.index(max(outputs)) + 1
-        if f == 1:
-            return "Cat"
-        elif f == 2:
-            return "Laptop"
-        elif f == 3:
-            return "Apple"
-        elif f == 4:
-            return "Car"
-        else:
-            return "Helicopter"
+    def test(self, samples, bias, activation_function):
+        literal_output = list()
+        for sample in samples:
+            outputs = self.forward_propagate(self.__best_Network, sample, bias,
+                                             activation_function)
+            f = outputs.index(max(outputs)) + 1
+            if f == 1:
+                literal_output.append("Cat")
+            elif f == 2:
+                literal_output.append("Laptop")
+            elif f == 3:
+                literal_output.append("Apple")
+            elif f == 4:
+                literal_output.append("Car")
+            else:
+                literal_output.append("Helicopter")
+
+        return literal_output

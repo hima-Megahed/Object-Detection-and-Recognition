@@ -23,7 +23,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$BP.coverage" NAME="BP Coverage Results" MODIFIED="1524250399730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$Main.coverage" NAME="Main Coverage Results" MODIFIED="1524267973339" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$main.coverage" NAME="main Coverage Results" MODIFIED="1524676084385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$main.coverage" NAME="main Coverage Results" MODIFIED="1524752591480" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$trest.coverage" NAME="Data Coverage Results" MODIFIED="1523272419164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$Data.coverage" NAME="Data Coverage Results" MODIFIED="1524419746187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$any.coverage" NAME="any Coverage Results" MODIFIED="1524565710695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -170,6 +170,7 @@
         <option value="$PROJECT_DIR$/any.py" />
         <option value="$PROJECT_DIR$/Highlight Objects.py" />
         <option value="$PROJECT_DIR$/BackPropagation.py" />
+        <option value="$PROJECT_DIR$/Clustering.py" />
         <option value="$PROJECT_DIR$/DataManipulation.py" />
         <option value="$PROJECT_DIR$/Clustering.py" />
         <option value="$PROJECT_DIR$/test.py" />
@@ -387,7 +388,14 @@
       <option name="project" value="LOCAL" />
       <updated>1524268368275</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Preparing Testing Process and highlighting">
+      <created>1524676212169</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1524676212169</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -454,16 +462,12 @@
     <MESSAGE value="Data preprocessing &amp; Feature Extraction PCA Finished" />
     <MESSAGE value="Back Propagation finished" />
     <MESSAGE value="MLP Reimplemented &amp; values Issue Solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="MLP Reimplemented &amp; values Issue Solved" />
+    <MESSAGE value="Preparing Testing Process and highlighting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Preparing Testing Process and highlighting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/BackPropagation.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Highlight Objects.py</url>
           <line>73</line>
@@ -918,6 +922,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Highlight Objects.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#600#1816#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -926,7 +941,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackPropagation.py">
+    <entry file="file://$PROJECT_DIR$/Clustering.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1908">
           <caret line="125" column="18" lean-forward="true" selection-start-line="125" selection-start-column="18" selection-end-line="125" selection-end-column="33" />
@@ -969,12 +984,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RBF.py">
+    <entry file="file://$PROJECT_DIR$/BackPropagation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
           <caret line="89" column="9" lean-forward="false" selection-start-line="89" selection-start-column="9" selection-end-line="89" selection-end-column="9" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#5962#5995#0" expanded="false" />
+            <element signature="e#6140#6285#0" expanded="false" />
+            <element signature="e#6346#6370#0" expanded="false" />
+            <element signature="e#6440#6472#0" expanded="false" />
+            <element signature="e#7185#7549#0" expanded="false" />
+            <element signature="e#7605#8191#0" expanded="false" />
+            <element signature="e#8724#9495#0" expanded="false" />
+            <element signature="e#9611#9856#0" expanded="false" />
+            <element signature="e#9947#10045#0" expanded="false" />
+            <element signature="e#10182#10538#0" expanded="false" />
+            <element signature="e#10661#10787#0" expanded="false" />
+            <element signature="e#10923#11669#0" expanded="false" />
           </folding>
         </state>
       </provider>
