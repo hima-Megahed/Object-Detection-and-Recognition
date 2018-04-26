@@ -186,8 +186,7 @@ class GUI:
             res = self.RBF.mseTest(self.PCA_Test_Features,
                                    self.RBFweights,
                                    self.RBFcentroids)
-            for i in range(len(res)):
-                print(i + 1, " ", res[i], end='\n')
+        print(res)
 
             '''when run the app call run func'''
             res = self.RBF.run(self.PCA_Test_Features[0],

@@ -77,8 +77,8 @@ class BackPropagation:
                     self.__best_Network = self.Network
                 print("> epoch:{}, Mean Square Error:{}, Minimum MSE:{}".format(epoch_ind, mse, min_mse))
                 epoch_ind += 1
-                if mse <= threshold:
-                    break
+                #if mse <= threshold:
+                #    break
 
         # Cross Validation
         else:
@@ -314,20 +314,35 @@ class BackPropagation:
                 neuron['weights'][0] += l_rate * neuron['delta'] * bias
 
     def test(self, samples, bias, activation_function):
-        literal_output = list()
+        model_output = list()
+        actual_output = [1] * 8
+        actual_output.extend([2] * 5)
+        actual_output.extend([3] * 3)
+        actual_output.extend([4] * 7)
+        actual_output.extend([5] * 3)
+
         for sample in samples:
             outputs = self.forward_propagate(self.__best_Network, sample, bias,
                                              activation_function)
             f = outputs.index(max(outputs)) + 1
             if f == 1:
-                literal_output.append("Cat")
+                model_output.append(1)
             elif f == 2:
-                literal_output.append("Laptop")
+                model_output.append(2)
             elif f == 3:
-                literal_output.append("Apple")
+                model_output.append(3)
             elif f == 4:
-                literal_output.append("Car")
+                model_output.append(4)
             else:
-                literal_output.append("Helicopter")
+                model_output.append(5)
 
-        return literal_output
+        confusion_matrix = [[0 for x in range(5)]
+                            for y in range(5)]
+
+        for s in range(len(model_output)):
+            y = actual_output[s]
+            confusion_matrix[y - 1][model_output[s] - 1] += 1
+
+        acc = (np.sum([confusion_matrix[i][i]
+                       for i in range(5)]) / len(model_output)) * 100
+        return acc
