@@ -17,11 +17,8 @@ from operator import itemgetter
 
 class TrainingData:
     def __init__(self):
-        self.__TRAINING_PATH = "F:\GitHub - Projects" \
-                               "\Object-Detection-and-Recognition\Data set" \
-                               "\Training"
-        self.__TESTING_PATH = "F:\GitHub - Projects" \
-                              "\Object-Detection-and-Recognition\Data set" \
+        self.__TRAINING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/Training"
+        self.__TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/" \
                               "\Testing"
         # changing directory
         os.chdir(self.__TRAINING_PATH)
@@ -128,12 +125,8 @@ class TrainingData:
 
 class TestingData:
     def __init__(self):
-        self.__TESTING_PATH = "F:\GitHub - Projects" \
-                              "\Object-Detection-and-Recognition\Data set" \
-                              "\Testing"
-        self.__CUSTOM_TESTING_PATH = "F:\GitHub - Projects" \
-                               "\Object-Detection-and-Recognition\Data set" \
-                               "\Custom Testing"
+        self.__TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set\Testing"
+        self.__CUSTOM_TESTING_PATH = "/home/harmoush/Downloads/Object-Detection-and-Recognition/Data set/Custom Testing"
         self.__Testing_Pics = [
             'Cat Test1.png',
             'Laptop Test1.png',
@@ -151,13 +144,14 @@ class TestingData:
 
     def read(self):
         # img = imread(self.__Training_Pics[i], as_grey=True)
-        img = misc.imread(self.__CUSTOM_TESTING_PATH + '/' +self.__Testing_Pics[2], mode='L')
+        '''img = misc.imread(self.__CUSTOM_TESTING_PATH + '/' +self.__Testing_Pics[2], mode='L')
         # Resizing Image to 50x50
         img = misc.imresize(img, (50, 50))
         # Converting Image from 2D to
         img = np.reshape(img, 2500)
         self.__TestingData[0] = img
-        return self.__TestingData
+        return self.__TestingData'''
+        return 0
 
     def apply_pca(self):
         sklearn_pca = sklearnPCA(n_components=24)

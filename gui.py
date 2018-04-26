@@ -165,10 +165,14 @@ class GUI:
             RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate.get(),
                                       self.epochsNo.get(),self.errorThreshold.get(),
                                       self.NumberOfNeuronsRBF.get())
-            weights = RBF.mseTrain() #weights[ [numHiddenNeurons] ] -> outter list size equals number of output neurons, inner  equals num HiddenNeurons
-
-            RBF.mseTest(self.PCA_Test_Features, weights)      # this calling for testing
-
+            weights,centroids = RBF.mseTrain() #weights[ [numHiddenNeurons] ] -> outter list size equals number of output neurons, inner  equals num HiddenNeurons
+            '''you may be need to save the weights and centroids in a file and when you test an image load the weights 
+            because in the pratical exam dr. will not train it.he'll test the project and may be ask to train'''
+            test_class = RBF.mseTest(self.PCA_Test_Features, weights,centroids)      # this calling for testing
+            '''when you input an image and after you extract the features of each object in the image 
+            call the RBF.mseTest() function and for every object pass its features in the first parameter 
+            and the weights in the second parameter and the output of the function is number of the class '''
+            print("test class = ",test_class)
         return 0
 
     def init(self):
