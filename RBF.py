@@ -59,7 +59,6 @@ class RadialBasisFunction:
         return weights,self.centroids
 
     def updateError(self, weights,features):
-        average_mse = 0
         MSE = [0 for i in range(5)]
         num_samples = len(features)
         for i in range(num_samples):

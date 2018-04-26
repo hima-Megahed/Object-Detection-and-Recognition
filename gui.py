@@ -167,15 +167,6 @@ class GUI:
         # Radial Basis Function
         else:
 
-            '''for i in range(0,len(self.PCA_TFeatures)):
-                print("Sample ", i,end="\n")
-                print(self.PCA_TFeatures[i])
-            print("\n")
-
-
-            self.PCA_TFeatures = np.array(PCA).tolist()'''
-
-
             self.RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate.get(),
                                       self.epochsNo.get(),self.errorThresholdRBF.get(),
                                       self.NumberOfNeuronsRBF.get())
