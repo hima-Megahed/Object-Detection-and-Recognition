@@ -22,7 +22,7 @@ class K_Means:
 
     def ComputeCentroids(self):
         for i in range(len(self.Centroids)):
-            Mean = [0.0 for j in range(self.Centroids[i])]
+            Mean = [0 for j in range(len(self.Centroids[i]))]
             for j in range(len(self.ClustersData[i])):
                 for k in range(len(self.ClustersData[i][0])):
                     Mean[k] += self.ClustersData[i][j][k]
@@ -33,7 +33,7 @@ class K_Means:
         for i in range(self.MaxIterations):
             self.ClustersData = [[] for i in range(self.K)]
             for j in range(len(self.Data)):
-                MinDistance = sys.maxint
+                MinDistance = 1000000000
                 Cluster = -1
                 for k in range(len(self.Centroids)):
                     Tmp = self.EculideanDistance(self.Data[j],self.Centroids[k])
