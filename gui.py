@@ -194,7 +194,7 @@ class GUI:
                            self.RBFcentroids)
         print(res)
 
-
+        print("test for commit")
 
 
 
