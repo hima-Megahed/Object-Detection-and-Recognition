@@ -188,11 +188,11 @@ class GUI:
                                    self.RBFcentroids)
         print(res)
 
-            '''when run the app call run func'''
-            res = self.RBF.run(self.PCA_Test_Features[0],
-                                   self.RBFweights,
-                                   self.RBFcentroids)
-            print(res)
+        '''when run the app call run func'''
+        res = self.RBF.run(self.PCA_Test_Features[0],
+                           self.RBFweights,
+                           self.RBFcentroids)
+        print(res)
 
 
 
