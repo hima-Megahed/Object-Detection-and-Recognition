@@ -180,7 +180,7 @@ class GUI:
             res = self.RBF.mseTest(self.PCA_Test_Features,
                                    self.RBFweights,
                                    self.RBFcentroids)
-        [print(i) for i in res]
+        print(res)
 
     @staticmethod
     def pca_graph():

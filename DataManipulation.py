@@ -175,7 +175,7 @@ class TestingData:
             # Converting Image from 2D to
             img = np.reshape(img, 2500)
             tmp.append(img)
-        self.__TestingData = np.asarray(tmp)
+        self.__TestingData = StandardScaler().fit_transform(tmp)
         return self.__TestingData
 
     def apply_pca(self):
