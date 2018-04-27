@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="372aa075-7215-4761-8435-503f50c45156" name="Default" comment="Updating RBF and adding test samples">
+    <list default="true" id="372aa075-7215-4761-8435-503f50c45156" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BackPropagation.py" afterPath="$PROJECT_DIR$/BackPropagation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DataManipulation.py" afterPath="$PROJECT_DIR$/DataManipulation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RBF.py" afterPath="$PROJECT_DIR$/RBF.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui.py" afterPath="$PROJECT_DIR$/gui.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -18,7 +17,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$BP.coverage" NAME="BP Coverage Results" MODIFIED="1524250399730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$Main.coverage" NAME="Main Coverage Results" MODIFIED="1524267973339" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$main.coverage" NAME="main Coverage Results" MODIFIED="1524767295344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$main.coverage" NAME="main Coverage Results" MODIFIED="1524828977112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$trest.coverage" NAME="Data Coverage Results" MODIFIED="1523272419164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$Data.coverage" NAME="Data Coverage Results" MODIFIED="1524419746187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$any.coverage" NAME="any Coverage Results" MODIFIED="1524565710695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -39,8 +38,8 @@
       <file leaf-file-name="gui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="166" column="31" lean-forward="true" selection-start-line="166" selection-start-column="31" selection-end-line="166" selection-end-column="31" />
+            <state relative-caret-position="3111">
+              <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
               <folding>
                 <element signature="e#20#40#0" expanded="true" />
               </folding>
@@ -48,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RBF.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RBF.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RBF.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="63" column="35" lean-forward="true" selection-start-line="63" selection-start-column="35" selection-end-line="63" selection-end-column="35" />
+            <state relative-caret-position="233">
+              <caret line="214" column="33" lean-forward="true" selection-start-line="214" selection-start-column="33" selection-end-line="214" selection-end-column="33" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -63,7 +62,7 @@
       <file leaf-file-name="Clustering.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Clustering.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
+            <state relative-caret-position="799">
               <caret line="48" column="28" lean-forward="false" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -72,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BackPropagation.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BackPropagation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackPropagation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+            <state relative-caret-position="2176">
+              <caret line="131" column="49" lean-forward="false" selection-start-line="131" selection-start-column="49" selection-end-line="131" selection-end-column="49" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#5964#5997#0" expanded="false" />
@@ -99,7 +98,7 @@
       <file leaf-file-name="Highlight Objects.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Highlight Objects.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="221">
               <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
@@ -112,8 +111,8 @@
       <file leaf-file-name="DataManipulation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataManipulation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="180" column="24" lean-forward="true" selection-start-line="180" selection-start-column="24" selection-end-line="180" selection-end-column="24" />
+            <state relative-caret-position="1139">
+              <caret line="180" column="24" lean-forward="false" selection-start-line="180" selection-start-column="24" selection-end-line="180" selection-end-column="24" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#534#679#0" expanded="false" />
@@ -145,8 +144,9 @@
       <find>__Network</find>
       <find>self.TrainingData</find>
       <find>get_sample_ind_</find>
-      <find>print</find>
       <find>get_sample_class</find>
+      <find>updateError</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>self.__Training</replace>
@@ -167,10 +167,10 @@
         <option value="$PROJECT_DIR$/any.py" />
         <option value="$PROJECT_DIR$/Highlight Objects.py" />
         <option value="$PROJECT_DIR$/Clustering.py" />
-        <option value="$PROJECT_DIR$/RBF.py" />
         <option value="$PROJECT_DIR$/BackPropagation.py" />
-        <option value="$PROJECT_DIR$/gui.py" />
         <option value="$PROJECT_DIR$/DataManipulation.py" />
+        <option value="$PROJECT_DIR$/gui.py" />
+        <option value="$PROJECT_DIR$/RBF.py" />
       </list>
     </option>
   </component>
@@ -204,7 +204,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -241,7 +241,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -371,11 +371,19 @@
       <option name="project" value="LOCAL" />
       <updated>1524752921413</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Testing Values problem Solved">
+      <created>1524767789367</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1524767789392</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32923076" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -385,11 +393,11 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5030769" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18957704" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19486405" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.51384616" sideWeight="0.49707174" order="5" side_tool="false" content_ui="tabs" x="-414" y="205" width="1616" height="415" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.51384616" sideWeight="0.49707174" order="5" side_tool="false" content_ui="tabs" x="-414" y="205" width="1616" height="415" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -440,7 +448,9 @@
     <MESSAGE value="MLP Reimplemented &amp; values Issue Solved" />
     <MESSAGE value="Preparing Testing Process and highlighting" />
     <MESSAGE value="Updating RBF and adding test samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating RBF and adding test samples" />
+    <MESSAGE value="Testing Values problem Solved" />
+    <MESSAGE value="Adding Confusion Matrix to RBF" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding Confusion Matrix to RBF" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1038,7 +1048,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Highlight Objects.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="221">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
@@ -1051,13 +1061,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Clustering.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
+        <state relative-caret-position="799">
           <caret line="48" column="28" lean-forward="false" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -1069,24 +1078,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
           <caret line="502" column="0" lean-forward="false" selection-start-line="502" selection-start-column="0" selection-end-line="502" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RBF.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="63" column="35" lean-forward="true" selection-start-line="63" selection-start-column="35" selection-end-line="63" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DataManipulation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="180" column="24" lean-forward="true" selection-start-line="180" selection-start-column="24" selection-end-line="180" selection-end-column="24" />
+        <state relative-caret-position="1139">
+          <caret line="180" column="24" lean-forward="false" selection-start-line="180" selection-start-column="24" selection-end-line="180" selection-end-column="24" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#534#679#0" expanded="false" />
@@ -1101,20 +1099,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="166" column="31" lean-forward="true" selection-start-line="166" selection-start-column="31" selection-end-line="166" selection-end-column="31" />
-          <folding>
-            <element signature="e#20#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BackPropagation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state relative-caret-position="2176">
+          <caret line="131" column="49" lean-forward="false" selection-start-line="131" selection-start-column="49" selection-end-line="131" selection-end-column="49" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#5964#5997#0" expanded="false" />
@@ -1129,6 +1117,26 @@
             <element signature="e#10663#10789#0" expanded="false" />
             <element signature="e#10925#11671#0" expanded="false" />
             <element signature="e#13040#13109#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3111">
+          <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+          <folding>
+            <element signature="e#20#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RBF.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="214" column="33" lean-forward="true" selection-start-line="214" selection-start-column="33" selection-end-line="214" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
