@@ -3,8 +3,9 @@ import tkinter as tk
 from tkinter import ttk
 from BackPropagation import BackPropagation
 from DataManipulation import TrainingData, TestingData
-import numpy as np
 from RBF import RadialBasisFunction
+from segmentation import SegmentationEngine
+from Highlighting import Highlight
 
 
 class GUI:
@@ -41,10 +42,6 @@ class GUI:
         self.TrainingData = TrainingData.read(training_tmp)
         self.PCA_TFeatures = TrainingData.apply_pca(training_tmp)
         self.back_propagation = BackPropagation()
-
-        testing_tmp = TestingData()
-        TestingData.read(testing_tmp)
-        self.PCA_Test_Features = TestingData.apply_pca(testing_tmp)
 
         self.initialize_components()
         self.root.mainloop()
@@ -133,10 +130,13 @@ class GUI:
             .place(relx=0.03, rely=0.84)
         tk.Button(self.root, text="Draw PCA Graph", width=13, fg="Black",
                   bg="light Gray", command=lambda: self.pca_graph())\
-            .place(relx=0.27, rely=0.84)
-        tk.Button(self.root, text="Testing", width=10, fg="Black",
-                  bg="light Gray", command=lambda: self.test())\
-            .place(relx=0.51, rely=0.84)
+            .place(relx=0.25, rely=0.84)
+        tk.Button(self.root, text="Testing RealTime", width=13, fg="Black",
+                  bg="light Gray", command=lambda: self.test_Run())\
+            .place(relx=0.48, rely=0.84)
+        tk.Button(self.root, text="Testing Fixed", width=10, fg="Black",
+                  bg="light Gray", command=lambda: self.fixed_test()) \
+            .place(relx=0.70, rely=0.84)
 
     def train_model(self):
         # Multi Layer Perceptron
@@ -170,22 +170,52 @@ class GUI:
                                       self.epochsNo.get(),self.errorThresholdRBF.get(),
                                       self.NumberOfNeuronsRBF.get())
             self.RBFweights, self.RBFcentroids = self.RBF.mseTrain()
+            print(self.RBFweights)
+            print(self.RBFcentroids)
+            print("ff")
 
-    def test(self):
+
+    def test_Run(self):
+        seg = SegmentationEngine()
+        TestData = seg.get_tests()
+        testing = TestingData()
+        testing_features = list()
+        [testing_features.extend(img['ObjectImgsGrey']) for img in TestData]
+        PCA_Test_Features = testing.read(testing_features)
+
         if self.tab_control.index(self.tab_control.select()) == 0:
-            res = self.back_propagation.test(self.PCA_Test_Features,
-                                             self.bias.get(),
-                                             self.activationFunction.get())
+                res = self.back_propagation.test_literal(PCA_Test_Features,
+                                                         self.bias.get(),
+                                                         self.activationFunction.get())
         else:
-            res = self.RBF.mseTest(self.PCA_Test_Features,
+            res = self.RBF.run_test(PCA_Test_Features,
                                    self.RBFweights,
                                    self.RBFcentroids)
-        print(res)
 
+        res_ind = 0
+        highlight = Highlight()
+        for img in TestData:
+            highlight.HighlightObjects(img, res[res_ind: res_ind + len(img['ObjectImgsGrey'])])
+            res_ind += len(img['ObjectImgsGrey'])
+
+        a = 0
         '''when run the app call run func'''
         '''res = self.RBF.run(self.PCA_Test_Features[0], self.RBFweights,
                            self.RBFcentroids)
         print(res)'''
+
+    def fixed_test(self):
+        test_data = TestingData()
+        PCA_Test_Features = test_data.read_test_data_run()
+        if self.tab_control.index(self.tab_control.select()) == 0:
+                res = self.back_propagation.test(PCA_Test_Features,
+                                                 self.bias.get(),
+                                                 self.activationFunction.get())
+        else:
+            res = self.RBF.mseTest(PCA_Test_Features,
+                                   self.RBFweights,
+                                   self.RBFcentroids)
+        print(res)
 
     @staticmethod
     def pca_graph():

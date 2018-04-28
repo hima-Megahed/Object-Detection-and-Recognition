@@ -44,7 +44,7 @@ class RadialBasisFunction:
                 for output_neuron in range(5):
                     w = weights[output_neuron]
                     for w_index in range(len(w)):
-                        w[w_index] = w[w_index] + self.learnRate * error[output_neuron] * w[w_index]
+                        w[w_index] = w[w_index] + self.learnRate * error[output_neuron] * x[w_index]
                     weights[output_neuron] = w
 
 
@@ -83,11 +83,33 @@ class RadialBasisFunction:
 
     def mseTest(self,features, weights,centroids):
         model_output = list()
-        actual_output = [1] * 8
-        actual_output.extend([2] * 5)
-        actual_output.extend([3] * 3)
-        actual_output.extend([4] * 7)
-        actual_output.extend([5] * 3)
+        actual_output = [
+            2,
+            1,
+            1,
+            4,
+            1,
+            2,
+            1,
+            2,
+            4,
+            5,
+            1,
+            1,
+            4,
+            3,
+            2,
+            5,
+            3,
+            4,
+            1,
+            5,
+            4,
+            3,
+            4,
+            1,
+            2
+        ]
 
         self.features = features
         self.update_features()
@@ -125,7 +147,7 @@ class RadialBasisFunction:
                        for i in range(5)]) / len(model_output)) * 100
         return acc
 
-    def run(self,features,weights,centroids):
+    def run_test(self,features,weights,centroids):
         literal_output = "output"
         self.features = features
         self.update_features_test(features)
