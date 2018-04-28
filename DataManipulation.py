@@ -8,7 +8,7 @@ from plotly.graph_objs import *
 from scipy.linalg import eigh
 import numpy as np
 from scipy import misc
-from segmentation import SegmentationEngine
+from N_PCA import N_PCA
 
 class TrainingData:
     def __init__(self):
@@ -49,6 +49,7 @@ class TrainingData:
         ]
         self.__TrainingData = np.ndarray(shape=(25, 2500), dtype=float)
         self.__PCA_TFeatures = np.ndarray(shape=(25, 2500), dtype=float)
+        self.n_PCA = N_PCA()
 
     def read(self):
         # img = misc.imread(self.__TESTING_PATH + "\T1 - Cat Laptop .png")
@@ -119,6 +120,15 @@ class TrainingData:
         sklearn_pca = sklearnPCA(n_components=24)
         self.__PCA_TFeatures = sklearn_pca.fit_transform(self.__TrainingData)
         return self.__PCA_TFeatures
+
+    def train_Neural_pca(self, samples):
+      self.n_PCA.train_PCA(samples,0.03)
+
+    def apply_Neural_pca(self,samples):
+        pca_features=[]
+        for sample in (samples):
+            pca_features.append(self.n_PCA.Apply_PCA(sample))
+        return pca_features
 
 
 class TestingData:

@@ -4,6 +4,7 @@ from scipy import misc
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import cv2
 
 
 class Highlight:
@@ -43,6 +44,5 @@ class Highlight:
             self.AX.add_artist(ab)
 
         self.Fig.savefig(img['ImageName'], dpi=90, bbox_inches='tight')
-
-        #plt.show()
+        # plt.show()
 

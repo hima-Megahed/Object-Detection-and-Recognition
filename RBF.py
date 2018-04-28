@@ -108,7 +108,8 @@ class RadialBasisFunction:
             3,
             4,
             1,
-            2
+            2,
+            4
         ]
 
         self.features = features
@@ -148,37 +149,41 @@ class RadialBasisFunction:
         return acc
 
     def run_test(self,features,weights,centroids):
-        literal_output = "output"
+        literal_output = list()
         self.features = features
-        self.update_features_test(features)
+        self.update_features()
         v = [0 for i in range(5)]
         # self.features = sample
         self.centroids = centroids
-        # self.update_features_test()
-        for output_neuron in range(5):
-            w = weights[output_neuron]
-            v[output_neuron] = self.net_input(self.features, w)
-        probabilities = self.softmax(v)
-        # sum = np.sum(probabilities)
-        f = np.argmax(probabilities) + 1
-        if f == 1:
-            literal_output = "Cat"
-        elif f == 2:
-            literal_output = "Laptop"
-        elif f == 3:
-            literal_output = "Apple"
-        elif f == 4:
-            literal_output = "Car"
-        else:
-            literal_output = "Helicopter"
+        for sample in range(len(self.features)):
+            v = [0 for i in range(5)]
+            #self.features = sample
+            self.centroids = centroids
+            #self.update_features_test()
+            for output_neuron in range(5):
+                w = weights[output_neuron]
+                v[output_neuron] = self.net_input(self.features[sample], w)
+            probabilities = self.softmax(v)
+            # sum = np.sum(probabilities)
+            f = np.argmax(probabilities) + 1
+            if f == 1:
+                literal_output.append("Cat")
+            elif f == 2:
+                literal_output.append("Laptop")
+            elif f == 3:
+                literal_output.append("Apple")
+            elif f == 4:
+                literal_output.append("Car")
+            else:
+                literal_output.append("Helicopter")
 
         return literal_output
 
     def net_input(self, x, weight):
         """Calculate net input"""
-        v = 0
+        v = 0.0
         for i in range(len(x)):
-            v = v + x[i]* weight[i]
+            v = v + x[i] * weight[i]
         return v
 
     def get_sample_class(self,num):
