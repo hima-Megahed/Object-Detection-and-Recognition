@@ -9,7 +9,7 @@ class BackPropagation:
     def __init__(self):
         # Initializing weight vector with random values
         self.Network = None
-        self.__best_Network = None
+        self.best_Network = None
         self.__best_initialize_Network = None
 
     def main_algorithm(self, features, eta, epochs, bias, threshold,
@@ -46,7 +46,7 @@ class BackPropagation:
                     sample_ind += 1
                 if minsum > sum_error:
                     minsum = sum_error
-                    self.__best_Network = self.Network
+                    self.best_Network = self.Network
                 print('> epoch=%d, error=%.5f, Minimum is: %.5f'% (i, sum_error, minsum))
         # Threshold MSE
         elif stopping_criteria == 2:
@@ -74,7 +74,7 @@ class BackPropagation:
                     self.Network[-1:][0], mse_errors, n_samples)
                 if min_mse > mse:
                     min_mse = mse
-                    self.__best_Network = self.Network
+                    self.best_Network = self.Network
                 print("> epoch:{}, Mean Square Error:{}, Minimum MSE:{}".format(epoch_ind, mse, min_mse))
                 epoch_ind += 1
                 #if mse <= threshold:
@@ -315,14 +315,36 @@ class BackPropagation:
 
     def test(self, samples, bias, activation_function):
         model_output = list()
-        actual_output = [1] * 8
-        actual_output.extend([2] * 5)
-        actual_output.extend([3] * 3)
-        actual_output.extend([4] * 7)
-        actual_output.extend([5] * 3)
+        actual_output = [
+            2,
+            1,
+            1,
+            4,
+            1,
+            2,
+            1,
+            2,
+            4,
+            5,
+            1,
+            1,
+            4,
+            3,
+            2,
+            5,
+            3,
+            4,
+            1,
+            5,
+            4,
+            3,
+            4,
+            1,
+            2
+        ]
 
         for sample in samples:
-            outputs = self.forward_propagate(self.__best_Network, sample, bias,
+            outputs = self.forward_propagate(self.best_Network, sample, bias,
                                              activation_function)
             f = outputs.index(max(outputs)) + 1
             if f == 1:
@@ -346,3 +368,21 @@ class BackPropagation:
         acc = (np.sum([confusion_matrix[i][i]
                        for i in range(5)]) / len(model_output)) * 100
         return acc
+
+    def test_literal(self, samples, bias, activation_function):
+        model_output = []
+        for sample in samples:
+            outputs = self.forward_propagate(self.best_Network, sample, bias,
+                                             activation_function)
+            f = outputs.index(max(outputs)) + 1
+            if f == 1:
+                model_output.append("Cat")
+            elif f == 2:
+                model_output.append("Laptop")
+            elif f == 3:
+                model_output.append("Apple")
+            elif f == 4:
+                model_output.append("Car")
+            else:
+                model_output.append("Helicopter")
+        return model_output

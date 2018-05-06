@@ -16,7 +16,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$BP.coverage" NAME="BP Coverage Results" MODIFIED="1524250399730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$Main.coverage" NAME="Main Coverage Results" MODIFIED="1524267973339" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$main.coverage" NAME="main Coverage Results" MODIFIED="1524767295344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$main.coverage" NAME="main Coverage Results" MODIFIED="1524940361129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$trest.coverage" NAME="Data Coverage Results" MODIFIED="1523272419164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$Data.coverage" NAME="Data Coverage Results" MODIFIED="1524419746187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Object_Detection_and_Recognition$any.coverage" NAME="any Coverage Results" MODIFIED="1524565710695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -40,8 +40,18 @@
             <state relative-caret-position="357">
               <caret line="196" column="30" lean-forward="false" selection-start-line="196" selection-start-column="30" selection-end-line="196" selection-end-column="30" />
               <folding>
-                <element signature="e#20#40#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="N_PCA.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/N_PCA.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -53,6 +63,7 @@
               <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
+                <element signature="e#3272#3672#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -82,8 +93,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataManipulation.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataManipulation.py">
+      <file leaf-file-name="segmentation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/segmentation.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="130">
               <caret line="172" column="0" lean-forward="true" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
@@ -118,6 +129,7 @@
       <replace>self.__Training</replace>
       <replace>ind_w_input</replace>
       <replace>Network</replace>
+      <replace>best_Network</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -131,11 +143,11 @@
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/BPNew.py" />
         <option value="$PROJECT_DIR$/any.py" />
-        <option value="$PROJECT_DIR$/Highlight Objects.py" />
         <option value="$PROJECT_DIR$/Clustering.py" />
         <option value="$PROJECT_DIR$/Clustering.py" />
         <option value="$PROJECT_DIR$/DataManipulation.py" />
         <option value="$PROJECT_DIR$/RBF.py" />
+        <option value="$PROJECT_DIR$/Highlighting.py" />
         <option value="$PROJECT_DIR$/BackPropagation.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/gui.py" />
@@ -149,8 +161,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="676" />
     <option name="width" value="697" />
     <option name="height" value="775" />
   </component>
@@ -216,7 +227,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\Ibrahim Hasan\AppData\Local\Programs\Python\Python36\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -242,7 +253,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Object-Detection-and-Recognition" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="F:\GitHub - Projects\Object-Detection-and-Recognition\Highlight Objects.py" />
+      <option name="SCRIPT_NAME" value="F:\GitHub - Projects\Object-Detection-and-Recognition\Highlighting.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -366,7 +377,28 @@
       <option name="project" value="LOCAL" />
       <updated>1524752921413</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Testing Values problem Solved">
+      <created>1524767789367</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1524767789392</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Adding Confusion Matrix to RBF">
+      <created>1524831274164</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1524831274164</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Adding Confusion Matrix to RBF">
+      <created>1524928857426</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1524928857426</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -383,6 +415,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38267717" sideWeight="0.49707174" order="5" side_tool="false" content_ui="tabs" x="-414" y="205" width="1616" height="415" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -407,6 +440,31 @@
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32923076" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53640413" sideWeight="0.50292826" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276923" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276923" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.72923076" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20392749" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276923" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3276923" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.58" sideWeight="0.49707174" order="5" side_tool="false" content_ui="tabs" x="-414" y="205" width="1616" height="415" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -446,7 +504,9 @@
     <MESSAGE value="MLP Reimplemented &amp; values Issue Solved" />
     <MESSAGE value="Preparing Testing Process and highlighting" />
     <MESSAGE value="Updating RBF and adding test samples" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating RBF and adding test samples" />
+    <MESSAGE value="Testing Values problem Solved" />
+    <MESSAGE value="Adding Confusion Matrix to RBF" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding Confusion Matrix to RBF" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -523,6 +583,7 @@
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="self._TestingData__PCA_TestFeatures.max" />
+        <watch expression="PCA_Test_Features.__internals__" />
       </configuration>
     </watches-manager>
   </component>
@@ -566,7 +627,9 @@
         <state relative-caret-position="697">
           <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding>
-            <element signature="e#20#40#0" expanded="true" />
+            <element signature="e#20#31#0" expanded="true" />
+            <element signature="e#8680#14820#1" expanded="false" />
+            <element signature="e#16058#16172#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -588,7 +651,9 @@
         <state relative-caret-position="2533">
           <caret line="149" column="46" lean-forward="false" selection-start-line="149" selection-start-column="46" selection-end-line="149" selection-end-column="46" />
           <folding>
-            <element signature="e#20#40#0" expanded="true" />
+            <element signature="e#20#31#0" expanded="true" />
+            <element signature="e#8680#14820#1" expanded="false" />
+            <element signature="e#16058#16172#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -621,7 +686,9 @@
         <state relative-caret-position="2176">
           <caret line="128" column="27" lean-forward="true" selection-start-line="128" selection-start-column="27" selection-end-line="128" selection-end-column="27" />
           <folding>
-            <element signature="e#20#40#0" expanded="true" />
+            <element signature="e#20#31#0" expanded="true" />
+            <element signature="e#8680#14820#1" expanded="false" />
+            <element signature="e#16058#16172#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -643,7 +710,9 @@
         <state relative-caret-position="238">
           <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
           <folding>
-            <element signature="e#20#40#0" expanded="true" />
+            <element signature="e#20#31#0" expanded="true" />
+            <element signature="e#8680#14820#1" expanded="false" />
+            <element signature="e#16058#16172#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -672,7 +741,9 @@
         <state relative-caret-position="544">
           <caret line="36" column="44" lean-forward="false" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
           <folding>
-            <element signature="e#20#40#0" expanded="true" />
+            <element signature="e#20#31#0" expanded="true" />
+            <element signature="e#8680#14820#1" expanded="false" />
+            <element signature="e#16058#16172#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -712,7 +783,9 @@
         <state relative-caret-position="527">
           <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
-            <element signature="e#20#40#0" expanded="true" />
+            <element signature="e#20#31#0" expanded="true" />
+            <element signature="e#8680#14820#1" expanded="false" />
+            <element signature="e#16058#16172#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -752,7 +825,9 @@
         <state relative-caret-position="85">
           <caret line="8" column="23" lean-forward="false" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="23" />
           <folding>
-            <element signature="e#20#40#0" expanded="true" />
+            <element signature="e#20#31#0" expanded="true" />
+            <element signature="e#8680#14820#1" expanded="false" />
+            <element signature="e#16058#16172#0" expanded="false" />
           </folding>
         </state>
       </provider>

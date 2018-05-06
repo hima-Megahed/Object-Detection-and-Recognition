@@ -44,7 +44,7 @@ class RadialBasisFunction:
                 for output_neuron in range(5):
                     w = weights[output_neuron]
                     for w_index in range(len(w)):
-                        w[w_index] = w[w_index] + self.learnRate * error[output_neuron] * w[w_index]
+                        w[w_index] = w[w_index] + self.learnRate * error[output_neuron] * x[w_index]
                     weights[output_neuron] = w
 
 
@@ -82,9 +82,39 @@ class RadialBasisFunction:
         return average_mse
 
     def mseTest(self,features, weights,centroids):
-        literal_output = list()
+        model_output = list()
+        actual_output = [
+            2,
+            1,
+            1,
+            4,
+            1,
+            2,
+            1,
+            2,
+            4,
+            5,
+            1,
+            1,
+            4,
+            3,
+            2,
+            5,
+            3,
+            4,
+            1,
+            5,
+            4,
+            3,
+            4,
+            1,
+            2,
+            4
+        ]
+
         self.features = features
         self.update_features()
+
         for sample in range(len(self.features)):
             v = [0 for i in range(5)]
             #self.features = sample
@@ -95,6 +125,46 @@ class RadialBasisFunction:
                 v[output_neuron] = self.net_input(self.features[sample], w)
             probabilities = self.softmax(v)
             #sum = np.sum(probabilities)
+            f = np.argmax(probabilities) + 1
+            if f == 1:
+                model_output.append(1)
+            elif f == 2:
+                model_output.append(2)
+            elif f == 3:
+                model_output.append(3)
+            elif f == 4:
+                model_output.append(4)
+            else:
+                model_output.append(5)
+
+        confusion_matrix = [[0 for x in range(5)]
+                            for y in range(5)]
+
+        for s in range(len(model_output)):
+            y = actual_output[s]
+            confusion_matrix[y - 1][model_output[s] - 1] += 1
+
+        acc = (np.sum([confusion_matrix[i][i]
+                       for i in range(5)]) / len(model_output)) * 100
+        return acc
+
+    def run_test(self,features,weights,centroids):
+        literal_output = list()
+        self.features = features
+        self.update_features()
+        v = [0 for i in range(5)]
+        # self.features = sample
+        self.centroids = centroids
+        for sample in range(len(self.features)):
+            v = [0 for i in range(5)]
+            #self.features = sample
+            self.centroids = centroids
+            #self.update_features_test()
+            for output_neuron in range(5):
+                w = weights[output_neuron]
+                v[output_neuron] = self.net_input(self.features[sample], w)
+            probabilities = self.softmax(v)
+            # sum = np.sum(probabilities)
             f = np.argmax(probabilities) + 1
             if f == 1:
                 literal_output.append("Cat")
@@ -138,9 +208,9 @@ class RadialBasisFunction:
 
     def net_input(self, x, weight):
         """Calculate net input"""
-        v = 0
+        v = 0.0
         for i in range(len(x)):
-            v = v + x[i]* weight[i]
+            v = v + x[i] * weight[i]
         return v
 
     def get_sample_class(self,num):
@@ -159,16 +229,16 @@ class RadialBasisFunction:
         sigma,max_distance = self.compute_sigma()
         num_samples = len(self.features)
         new_features = [[0 for i in range(self.numHiddenNeurons)] for i in range(num_samples)]
-        print("features \n ")
+
         for i in range(num_samples):
             for j in range(0,self.numHiddenNeurons):
                 r_square = self.EculideanDistance(self.features[i],self.centroids[j]) ** 2
                 double_sigma_square = 2 * (sigma ** 2)
                 mo= math.exp(-1 * (r_square/double_sigma_square))
                 new_features[i][j] = math.exp(-1 * (r_square/double_sigma_square))
-            print(new_features[i],end="\n")
+
         self.features = new_features
-        #print("features \n "   ,self.features)
+       
 
     def update_features_test(self,features):
         sigma,max_distance = self.compute_sigma()
@@ -205,6 +275,7 @@ class RadialBasisFunction:
         e_v = np.exp(norm)
         sum = np.sum(e_v)
         return (e_v / sum)
+
     def EculideanDistance(self,Feature, Centroid):
         SquaredDistance = 0.0
         for i in range(len(Centroid)):
