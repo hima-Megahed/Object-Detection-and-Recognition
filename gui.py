@@ -8,6 +8,7 @@ import pickle
 from BackPropagation import BackPropagation
 from DataManipulation import TrainingData, TestingData
 from RBF import RadialBasisFunction
+
 from segmentation import SegmentationEngine
 from Highlighting import Highlight
 from N_PCA import N_PCA
@@ -173,10 +174,15 @@ class GUI:
                                             25)
         # Radial Basis Function
         else:
+
             self.RBF = RadialBasisFunction(self.PCA_TFeatures,self.learnRate.get(),
                                       self.epochsNo.get(),self.errorThresholdRBF.get(),
                                       self.NumberOfNeuronsRBF.get())
+
             self.RBFweights, self.RBFcentroids = self.RBF.mseTrain()
+            print(self.RBFweights)
+            print(self.RBFcentroids)
+            it = 0
 
 
     def test_Run(self):
@@ -238,6 +244,16 @@ class GUI:
                                    self.RBFweights,
                                    self.RBFcentroids)
         print(res)
+
+        '''when run the app call run func'''
+        res = self.RBF.run(self.PCA_Test_Features[0],
+                           self.RBFweights,
+                           self.RBFcentroids)
+        print(res)
+
+        print("test for commit")
+
+
 
     @staticmethod
     def pca_graph():

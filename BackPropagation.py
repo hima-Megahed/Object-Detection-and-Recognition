@@ -118,9 +118,8 @@ class BackPropagation:
                                   for i in range(5)]) / 5) * 100
                     if max_acc < acc:
                         max_acc = acc
-                        self.best_Network = self.Network
-                    print(
-                        f"Accuracy is: {acc:.3f}, Best Accuracy: {max_acc:.3f}")
+                        self.__best_Network = self.Network
+                    print("Accuracy is: {acc:.3f}, Best Accuracy: {max_acc:.3f}")
 
                     asdf = 0
 
