@@ -1,6 +1,6 @@
 # Object Detection & Recognition
 
-This project was intended to demonstrate machine learning skills through applying the most basic ML algorithms to eventually detect and     recogniz predefined objects.
+This project was intended to demonstrate machine learning skills through applying the most basic ML algorithms to eventually detect and     recognize predefined objects.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
